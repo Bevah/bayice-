@@ -531,8 +531,8 @@ button {
 .watch-card__name {
   padding: 14px 16px 18px;
   font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   text-align: center;
   color: var(--text);
   border-top: 1px solid var(--border);
@@ -693,11 +693,14 @@ button {
 .slide__img-wrap img {
   max-height: 100%;
   width: auto;
-  max-width: 100%;
+  max-width: 92%;
   object-fit: contain;
-  filter: drop-shadow(0 24px 48px rgba(52, 152, 219, 0.2))
+  border-radius: var(--radius-img);
+  mix-blend-mode: lighten;
+  filter: drop-shadow(0 24px 48px rgba(52, 152, 219, 0.25))
     drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5));
-  transition: transform 0.35s var(--ease);
+  transition: transform 0.45s var(--ease), filter 0.4s;
+  animation: watchFloat 4.5s ease-in-out infinite;
 }
 
 .slide__img-wrap:hover img {
@@ -738,6 +741,60 @@ button {
 .feat__bar--active {
   height: 24px;
   background: #fff;
+}
+
+.feat__bars--numbered {
+  height: auto;
+  min-height: 40px;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.feat__bars--numbered .feat__bar {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: auto;
+  height: auto;
+  background: transparent;
+  padding: 0 3px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.feat__bars--numbered .feat__bar::before {
+  content: "";
+  display: block;
+  width: 2px;
+  height: 14px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: height 0.3s var(--ease), background 0.3s;
+}
+
+.feat__bars--numbered .feat__bar span {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.feat__bars--numbered .feat__bar--active {
+  color: var(--accent);
+}
+
+.feat__bars--numbered .feat__bar--active::before {
+  height: 26px;
+  background: #fff;
+}
+
+.feat__bars--numbered .feat__bar--decor {
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+.feat__bars--numbered button.feat__bar:hover {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* —— Checkout (light section) —— */
@@ -909,6 +966,11 @@ button {
 
 .pay-badge--amex {
   background: #016fd0;
+  color: #fff;
+}
+
+.pay-badge--disc {
+  background: #f76f20;
   color: #fff;
 }
 
@@ -1125,16 +1187,22 @@ button {
   }
 
   .hero__copy {
-    padding-bottom: 4vh;
+    padding-bottom: 0;
+    align-self: start;
   }
 
   .hero__h1 {
     font-size: clamp(2.15rem, 11vw, 3rem);
   }
 
+  .hero__cta,
   .btn--shop {
-    margin-top: 20px;
-    padding: 12px 28px;
+    margin-top: 22px;
+    padding: 14px 32px;
+    min-width: 160px;
+    display: inline-flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 
   .watch-grid {

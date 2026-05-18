@@ -123,14 +123,24 @@
 
   document.querySelectorAll('.watch-card__img-box img').forEach((img) => {
     gsap.to(img, {
-      y: -10,
+      y: -12,
       ease: 'none',
       scrollTrigger: {
         trigger: img.closest('.watch-card'),
         start: 'top bottom',
         end: 'bottom top',
-        scrub: true,
+        scrub: 0.8,
       },
+    });
+  });
+
+  document.querySelectorAll('.slide__img-wrap img').forEach((img) => {
+    gsap.from(img, {
+      scale: 0.9,
+      opacity: 0,
+      duration: 0.8,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: '#featured', start: 'top 75%' },
     });
   });
 
