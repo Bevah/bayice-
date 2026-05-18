@@ -1,4 +1,4 @@
-/* Featured slider + scroll to checkout */
+/* Featured slider + checkout interactions */
 (function () {
   'use strict';
 
@@ -64,7 +64,7 @@
       ScrollTrigger.create({
         trigger: featured,
         start: 'top top',
-        end: '+=220%',
+        end: '+=180%',
         pin: true,
         scrub: 1,
         onUpdate(self) {
@@ -90,7 +90,6 @@
       },
       { passive: true }
     );
-
     stage.addEventListener(
       'touchend',
       (e) => {

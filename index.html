@@ -15,51 +15,56 @@
 
 <nav class="nav nav--visible" id="mainNav" aria-label="Primary">
   <div class="nav__group nav__group--left">
-    <a href="#">Home</a>
-    <a href="#">Collection</a>
+    <a href="#hero">Home</a>
+    <a href="#halo">Collection</a>
     <a href="#">Store</a>
-    <a href="#">Contact</a>
+    <a href="#checkout">Contact</a>
   </div>
-  <a class="nav__brand" href="#">BAY ICE</a>
+  <a class="nav__brand" href="#hero">BAY ICE</a>
   <div class="nav__group nav__group--right">
-    <a href="#">Watches</a>
+    <a href="#skylight-grid">Watches</a>
     <a href="#">Best Deal</a>
     <a href="#">Services</a>
-    <a href="#">Search</a>
+    <a href="#" class="nav__search" aria-label="Search">
+      <span>Search</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>
+    </a>
   </div>
   <button class="nav__burger" id="navBurger" type="button" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
-<section class="hero" id="hero">
+<section class="hero" id="hero" aria-label="Bay Ice hero">
+  <video
+    id="heroBgVideo"
+    class="hero__bg"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    aria-hidden="true"
+  >
+    <source src="assets/hero/hero%20main.mp4" type="video/mp4" />
+  </video>
+  <div class="hero__overlay" aria-hidden="true"></div>
+
   <div class="hero__inner">
     <div class="hero__copy">
       <h1 class="hero__h1">Redefining Time.</h1>
       <p class="hero__sub"><em>“Timeless Motion”</em></p>
-      <a href="#halo" class="btn btn--shop">Shop Now</a>
-    </div>
-
-    <div class="hero__watch-zone" id="heroWatchZone">
-      <img
-        id="heroWatchImg"
-        class="hero__watch-img"
-        src="https://images.unsplash.com/photo-1611955872966-165a85689149?auto=format&fit=crop&w=1200&q=85"
-        alt="Bay Ice chronograph watch with gold accents"
-        width="800"
-        height="1000"
-        fetchpriority="high"
-      />
+      <a href="#halo" class="btn btn--shop hero__cta">Shop Now</a>
     </div>
 
     <aside class="hero__badge">
       <div class="hero__badge-thumb">
         <img
-          src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=240&q=80"
-          alt="Diamond detail"
+          src="assets/watches/skylight-silver-blue-detail.jpg"
+          alt="Diamond detail on Skylight dial"
           width="120"
           height="120"
-          loading="lazy"
+          loading="eager"
         />
       </div>
       <p>Precision in every sparkle.</p>
@@ -69,52 +74,26 @@
 
 <section class="col-section js-reveal" id="halo">
   <div class="section-nav" aria-hidden="true">
-    <div class="section-nav__left">
-      <span>Home</span><span>Collection</span><span>Store</span><span>Contact</span>
-    </div>
+    <div class="section-nav__left"><span>Home</span><span>Collection</span><span>Store</span><span>Contact</span></div>
     <span class="section-nav__brand">BAY ICE</span>
-    <div class="section-nav__right">
-      <span>Watches</span><span>Best Deal</span><span>Services</span><span>Search</span>
-    </div>
+    <div class="section-nav__right"><span>Watches</span><span>Best Deal</span><span>Services</span><span>Search</span></div>
   </div>
-
   <div class="col-section__body">
     <header class="col-header">
       <h2 class="col-title">HALO</h2>
       <a href="#" class="col-viewall">View All</a>
     </header>
-
     <div class="watch-grid">
       <article class="watch-card js-card" data-halo="green">
-        <div class="watch-card__img-box">
-          <img
-            src="https://images.unsplash.com/photo-1523170335258-f5e118e69daf?auto=format&fit=crop&w=700&q=85"
-            alt="Gold watch with green dial"
-            loading="lazy"
-          />
-        </div>
+        <div class="watch-card__img-box"><img src="assets/watches/halo-gold-green.jpg" alt="Gold watch with green dial" loading="lazy" /></div>
         <p class="watch-card__name">Gold and Green Dial</p>
       </article>
-
       <article class="watch-card js-card" data-halo="purple">
-        <div class="watch-card__img-box">
-          <img
-            src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=700&q=85"
-            alt="Silver watch with pink dial"
-            loading="lazy"
-          />
-        </div>
+        <div class="watch-card__img-box"><img src="assets/watches/halo-silver-pink.jpg" alt="Silver watch with pink dial" loading="lazy" /></div>
         <p class="watch-card__name">Silver and Pink Dial</p>
       </article>
-
       <article class="watch-card js-card" data-halo="blue">
-        <div class="watch-card__img-box">
-          <img
-            src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=700&q=85"
-            alt="Silver watch with blue dial"
-            loading="lazy"
-          />
-        </div>
+        <div class="watch-card__img-box"><img src="assets/watches/halo-silver-blue.jpg" alt="Silver watch with blue dial" loading="lazy" /></div>
         <p class="watch-card__name">Silver and Blue Dial</p>
       </article>
     </div>
@@ -123,52 +102,26 @@
 
 <section class="col-section col-section--skylight-grid js-reveal" id="skylight-grid">
   <div class="section-nav" aria-hidden="true">
-    <div class="section-nav__left">
-      <span>Home</span><span>Collection</span><span>Store</span><span>Contact</span>
-    </div>
+    <div class="section-nav__left"><span>Home</span><span>Collection</span><span>Store</span><span>Contact</span></div>
     <span class="section-nav__brand">BAY ICE</span>
-    <div class="section-nav__right">
-      <span>Watches</span><span>Best Deal</span><span>Services</span><span>Search</span>
-    </div>
+    <div class="section-nav__right"><span>Watches</span><span>Best Deal</span><span>Services</span><span>Search</span></div>
   </div>
-
   <div class="col-section__body">
     <header class="col-header">
       <h2 class="col-title">SKYLIGHT</h2>
       <a href="#" class="col-viewall">View All</a>
     </header>
-
     <div class="watch-grid">
       <article class="watch-card js-card">
-        <div class="watch-card__img-box watch-card__img-box--sky">
-          <img
-            src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d6?auto=format&fit=crop&w=700&q=85"
-            alt="Gold diamond bezel watch"
-            loading="lazy"
-          />
-        </div>
+        <div class="watch-card__img-box watch-card__img-box--sky"><img src="assets/watches/skylight-gold-front.jpg" alt="Gold diamond bezel watch" loading="lazy" /></div>
         <p class="watch-card__name">Gold Diamond Bezel</p>
       </article>
-
       <article class="watch-card watch-card--spotlight js-card">
-        <div class="watch-card__img-box watch-card__img-box--sky watch-card__img-box--glow">
-          <img
-            src="https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&w=700&q=85"
-            alt="Silver and blue dial watch"
-            loading="lazy"
-          />
-        </div>
+        <div class="watch-card__img-box watch-card__img-box--sky watch-card__img-box--glow"><img src="assets/watches/skylight-silver-blue-front.jpg" alt="Silver and blue dial watch" loading="lazy" /></div>
         <p class="watch-card__name">Silver and Blue Dial</p>
       </article>
-
       <article class="watch-card js-card">
-        <div class="watch-card__img-box watch-card__img-box--sky">
-          <img
-            src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?auto=format&fit=crop&w=700&q=85"
-            alt="Iced bezel watch"
-            loading="lazy"
-          />
-        </div>
+        <div class="watch-card__img-box watch-card__img-box--sky"><img src="assets/watches/halo-gold-green-angle.jpg" alt="Iced bezel watch" loading="lazy" /></div>
         <p class="watch-card__name">VVS Bezel Bussdown</p>
       </article>
     </div>
@@ -177,83 +130,49 @@
 
 <section class="featured js-reveal" id="featured">
   <div class="section-nav" aria-hidden="true">
-    <div class="section-nav__left">
-      <span>Home</span><span>Collection</span><span>Store</span><span>Contact</span>
-    </div>
+    <div class="section-nav__left"><span>Home</span><span>Collection</span><span>Store</span><span>Contact</span></div>
     <span class="section-nav__brand">BAY ICE</span>
-    <div class="section-nav__right">
-      <span>Watches</span><span>Best Deal</span><span>Services</span><span>Search</span>
-    </div>
+    <div class="section-nav__right"><span>Watches</span><span>Best Deal</span><span>Services</span><span>Search</span></div>
   </div>
-
   <div class="featured__shell">
     <div class="featured__meta">
-      <h2 class="featured__product-line">
-        <span class="featured__name">SKYLIGHT</span>
-        <span class="featured__size">26mm</span>
-      </h2>
+      <h2 class="featured__product-line"><span class="featured__name">SKYLIGHT</span><span class="featured__size">26mm</span></h2>
       <a href="#checkout" class="btn btn--buy">Buy Now</a>
     </div>
-
     <div class="featured__stage" id="featuredStage">
       <span class="feat__available">AVAILABLE</span>
-
       <div class="feat__actions">
         <button type="button" class="feat__icon-btn" aria-label="Add to wishlist">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         </button>
         <button type="button" class="feat__icon-btn" aria-label="Men's">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <circle cx="10" cy="14" r="6"/>
-            <path d="M14 10l7-7M21 3v6M21 3h-6"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="14" r="6"/><path d="M14 10l7-7M21 3v6M21 3h-6"/></svg>
         </button>
         <button type="button" class="feat__icon-btn" aria-label="Women's">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <circle cx="12" cy="9" r="5"/>
-            <path d="M12 14v8M8 20h8"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="9" r="5"/><path d="M12 14v8M8 20h8"/></svg>
         </button>
       </div>
-
       <div class="slider" id="mainSlider">
         <div class="slide slide--on" data-idx="0">
           <div class="slide__img-wrap" id="tapTarget" role="button" tabindex="0" aria-label="Open product details">
-            <img
-              src="https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&w=900&q=85"
-              alt="Skylight silver blue dial front"
-              draggable="false"
-            />
+            <img src="assets/watches/skylight-silver-blue-front.jpg" alt="Skylight silver blue dial front" draggable="false" />
           </div>
         </div>
         <div class="slide" data-idx="1">
-          <div class="slide__img-wrap">
-            <img
-              src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d6?auto=format&fit=crop&w=900&q=85"
-              alt="Skylight angle view"
-              draggable="false"
-            />
-          </div>
+          <div class="slide__img-wrap"><img src="assets/watches/skylight-silver-blue-side.jpg" alt="Skylight side view" draggable="false" /></div>
         </div>
         <div class="slide" data-idx="2">
-          <div class="slide__img-wrap">
-            <img
-              src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=900&q=85"
-              alt="Skylight detail"
-              draggable="false"
-            />
-          </div>
+          <div class="slide__img-wrap"><img src="assets/watches/skylight-silver-blue-detail.jpg" alt="Skylight detail" draggable="false" /></div>
         </div>
       </div>
-
       <p class="feat__dial-label">Silver-Blue Dial</p>
-
-      <div class="feat__bars" id="featBars" role="tablist" aria-label="Product views">
-        <button type="button" class="feat__bar feat__bar--active" data-to="0" role="tab" aria-selected="true" aria-label="View 1"></button>
-        <button type="button" class="feat__bar" data-to="1" role="tab" aria-selected="false" aria-label="View 2"></button>
-        <button type="button" class="feat__bar" data-to="2" role="tab" aria-selected="false" aria-label="View 3"></button>
+      <div class="feat__bars feat__bars--numbered" id="featBars" role="tablist" aria-label="Product views">
+        <button type="button" class="feat__bar feat__bar--active" data-to="0" role="tab" aria-selected="true" aria-label="View 10"><span>10</span></button>
+        <button type="button" class="feat__bar" data-to="1" role="tab" aria-selected="false" aria-label="View 11"><span>11</span></button>
+        <button type="button" class="feat__bar" data-to="2" role="tab" aria-selected="false" aria-label="View 12"><span>12</span></button>
+        <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>13</span></span>
+        <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>14</span></span>
+        <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>15</span></span>
       </div>
     </div>
   </div>
@@ -270,13 +189,7 @@
         </div>
       </div>
     </header>
-
-    <p class="checkout__desc">
-      Experience refined elegance with the BAY ICE SKYLIGHT. Crafted with premium
-      materials and timeless design, it is more than a watch — it is a statement of
-      confidence and style.
-    </p>
-
+    <p class="checkout__desc">Experience refined elegance with the BAY ICE SKYLIGHT. Crafted with premium materials and timeless design, it is more than a watch — it is a statement of confidence and style.</p>
     <div class="checkout__specs">
       <h3 class="checkout__specs-title">Specifications</h3>
       <ul class="checkout__specs-list">
@@ -288,7 +201,6 @@
         <li><span>Strap</span><span>Stainless Steel (20mm)</span></li>
       </ul>
     </div>
-
     <div class="checkout__actions-row">
       <div class="qty" aria-label="Quantity">
         <button type="button" class="qty__btn" id="qtyDown">−</button>
@@ -297,22 +209,19 @@
       </div>
       <button type="button" class="btn btn--cart" id="cartBtn">
         <svg class="btn--cart__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <path d="M16 10a4 4 0 0 1-8 0"/>
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
         </svg>
         Add to cart
       </button>
     </div>
-
     <button type="button" class="btn btn--shopify">Buy with SHOP</button>
-
     <footer class="checkout__trust">
       <p>Secure and trusted checkout with</p>
       <div class="pay-badges">
         <span class="pay-badge pay-badge--visa">VISA</span>
         <span class="pay-badge pay-badge--mc" aria-label="Mastercard"></span>
         <span class="pay-badge pay-badge--amex">AMEX</span>
+        <span class="pay-badge pay-badge--disc">DISCOVER</span>
       </div>
       <a href="#" class="checkout__more-pay">More payment options</a>
     </footer>
@@ -323,10 +232,7 @@
   <p class="footer__brand">BAY ICE</p>
   <p class="footer__tagline">Precision in every sparkle.</p>
   <nav class="footer__links" aria-label="Footer">
-    <a href="#">Privacy</a>
-    <a href="#">Terms</a>
-    <a href="#">Returns</a>
-    <a href="#">Contact</a>
+    <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Returns</a><a href="#checkout">Contact</a>
   </nav>
   <p class="footer__copy">© 2026 Bay Ice. All rights reserved.</p>
 </footer>

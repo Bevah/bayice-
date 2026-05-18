@@ -1,4 +1,4 @@
-/* Scroll reveals + ScrollTrigger helpers */
+/* Scroll reveals + parallax */
 (function () {
   'use strict';
 
@@ -25,10 +25,7 @@
       opacity: 0,
       duration: 0.65,
       ease: 'power2.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 88%',
-      },
+      scrollTrigger: { trigger: el, start: 'top 88%' },
     });
 
     const line = document.createElement('div');
@@ -48,15 +45,25 @@
     const cards = grid.querySelectorAll('.watch-card');
     gsap.from(cards, {
       opacity: 0,
-      y: 36,
-      scale: 0.97,
-      duration: 0.65,
-      stagger: 0.09,
+      y: 48,
+      scale: 0.94,
+      rotateX: 8,
+      transformOrigin: '50% 100%',
+      duration: 0.75,
+      stagger: 0.1,
       ease: 'power3.out',
-      scrollTrigger: {
-        trigger: grid,
-        start: 'top 86%',
-      },
+      scrollTrigger: { trigger: grid, start: 'top 86%' },
+    });
+    cards.forEach((card) => {
+      const img = card.querySelector('.watch-card__img-box img');
+      if (!img) return;
+      gsap.from(img, {
+        scale: 0.88,
+        opacity: 0,
+        duration: 0.7,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: card, start: 'top 88%' },
+      });
     });
   });
 
@@ -68,10 +75,7 @@
       duration: 0.6,
       stagger: 0.08,
       ease: 'power2.out',
-      scrollTrigger: {
-        trigger: meta,
-        start: 'top 82%',
-      },
+      scrollTrigger: { trigger: meta, start: 'top 82%' },
     });
   }
 
@@ -82,10 +86,7 @@
       scale: 0.96,
       duration: 0.85,
       ease: 'power3.out',
-      scrollTrigger: {
-        trigger: stage,
-        start: 'top 82%',
-      },
+      scrollTrigger: { trigger: stage, start: 'top 82%' },
     });
   }
 
@@ -97,10 +98,7 @@
       duration: 0.55,
       stagger: 0.06,
       ease: 'power2.out',
-      scrollTrigger: {
-        trigger: checkout,
-        start: 'top 90%',
-      },
+      scrollTrigger: { trigger: checkout, start: 'top 90%' },
     });
   }
 

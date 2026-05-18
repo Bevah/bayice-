@@ -1,2 +1,4 @@
-graphify-out
-graphifyy-env
+node_modules/
+graphifyy-env/
+.DS_Store
+*.log

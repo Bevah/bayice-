@@ -19,7 +19,8 @@
   --accent-hover: #5dade2;
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
-  --radius-card: 14px;
+  --radius-card: 22px;
+  --radius-img: 16px;
   --radius-pill: 999px;
   --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
@@ -107,6 +108,18 @@ button {
   white-space: nowrap;
 }
 
+.nav__search {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav__search svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0.85;
+}
+
 .nav__burger {
   display: none;
   flex-direction: column;
@@ -148,6 +161,14 @@ button {
   color: var(--black);
   margin-top: 28px;
   width: fit-content;
+  min-width: 148px;
+  min-height: 48px;
+  font-size: 12px;
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
 }
 
 .btn--shop:hover {
@@ -201,72 +222,89 @@ button {
   box-shadow: 0 10px 28px rgba(52, 152, 219, 0.35);
 }
 
-/* —— Hero —— */
+/* —— Hero (mockup §1: Redefining Time + hero main video bg) —— */
 .hero {
+  position: relative;
   min-height: 100svh;
+  min-height: 100dvh;
   background: var(--black);
-  padding-top: 56px;
+  overflow: hidden;
   display: flex;
-  align-items: center;
+  align-items: stretch;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% center;
+  z-index: 0;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(105deg, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.42) 32%, rgba(0, 0, 0, 0.08) 58%, rgba(0, 0, 0, 0.32) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, transparent 30%, rgba(0, 0, 0, 0.45) 100%);
+  pointer-events: none;
 }
 
 .hero__inner {
+  position: relative;
+  z-index: 2;
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: clamp(24px, 5vw, 64px) clamp(20px, 4vw, 48px) clamp(48px, 8vw, 80px);
+  padding: calc(56px + clamp(32px, 6vw, 72px)) clamp(20px, 4vw, 48px) clamp(40px, 7vw, 72px);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 1.15fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
   grid-template-rows: 1fr auto;
-  gap: clamp(24px, 4vw, 48px);
+  gap: clamp(20px, 4vw, 40px);
   align-items: center;
-  position: relative;
+  min-height: 100svh;
+  min-height: 100dvh;
 }
 
 .hero__copy {
   grid-column: 1;
   grid-row: 1;
-  max-width: 520px;
+  align-self: center;
+  max-width: 560px;
+  position: relative;
+  z-index: 4;
+}
+
+.hero__cta {
+  display: inline-flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .hero__h1 {
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: clamp(2.75rem, 6.5vw, 5.5rem);
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
   line-height: 1.02;
   letter-spacing: -0.02em;
   color: var(--text);
 }
 
 .hero__sub {
-  margin-top: 20px;
-  font-family: var(--font-sans);
-  font-size: 13px;
+  margin-top: clamp(14px, 2.5vw, 22px);
+  font-family: var(--font-serif);
+  font-size: clamp(13px, 1.6vw, 15px);
   font-weight: 400;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   color: var(--text-muted);
 }
 
 .hero__sub em {
   font-style: italic;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.hero__watch-zone {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.hero__watch-img {
-  width: min(100%, 520px);
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.65))
-    drop-shadow(0 12px 40px rgba(201, 169, 110, 0.12));
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .hero__badge {
@@ -278,31 +316,34 @@ button {
   flex-direction: column;
   align-items: flex-end;
   gap: 10px;
-  max-width: 140px;
+  max-width: 160px;
   text-align: right;
 }
 
 .hero__badge-thumb {
-  width: 72px;
-  height: 72px;
-  border-radius: 10px;
+  width: clamp(72px, 12vw, 96px);
+  height: clamp(72px, 12vw, 96px);
+  border-radius: 18px;
   overflow: hidden;
   border: 1px solid var(--border-strong);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(145deg, #5d8aa8 0%, #2a4a62 100%);
 }
 
 .hero__badge-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 16px;
+  mix-blend-mode: normal;
 }
 
 .hero__badge p {
-  font-size: 9px;
+  font-size: clamp(8px, 1.2vw, 10px);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-muted);
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 /* —— Section nav strip (mockup) —— */
@@ -343,12 +384,12 @@ button {
 
 /* —— Collection sections —— */
 .col-section {
-  background: var(--gray-900);
+  background: linear-gradient(180deg, var(--black) 0%, var(--gray-900) 45%, #1a2228 100%);
   border-top: 1px solid var(--border);
 }
 
 .col-section--skylight-grid {
-  background: var(--gray-800);
+  background: linear-gradient(180deg, #1a2228 0%, var(--gray-800) 50%, #252d35 100%);
 }
 
 .col-section__body {
@@ -410,8 +451,23 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 20px 16px 12px;
   overflow: hidden;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  isolation: isolate;
+}
+
+.watch-card__img-box::after {
+  content: "";
+  position: absolute;
+  inset: 12px 14px auto;
+  height: 55%;
+  border-radius: 50%;
+  background: inherit;
+  filter: blur(28px);
+  opacity: 0.65;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .watch-card[data-halo="green"] .watch-card__img-box {
@@ -435,14 +491,41 @@ button {
 }
 
 .watch-card__img-box img {
+  position: relative;
+  z-index: 1;
   max-height: 100%;
   width: auto;
+  max-width: 92%;
   object-fit: contain;
-  transition: transform 0.5s var(--ease);
+  border-radius: var(--radius-img);
+  mix-blend-mode: lighten;
+  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.45));
+  transition: transform 0.55s var(--ease), filter 0.4s;
+  animation: watchFloat 5s ease-in-out infinite;
+}
+
+.watch-card:nth-child(2) .watch-card__img-box img {
+  animation-delay: -1.2s;
+}
+
+.watch-card:nth-child(3) .watch-card__img-box img {
+  animation-delay: -2.4s;
+}
+
+@keyframes watchFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 .watch-card:hover .watch-card__img-box img {
-  transform: scale(1.05);
+  transform: translateY(-6px) scale(1.06);
+  filter: drop-shadow(0 22px 40px rgba(0, 0, 0, 0.55));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .watch-card__img-box img {
+    animation: none;
+  }
 }
 
 .watch-card__name {
@@ -597,6 +680,9 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 20px;
+  overflow: hidden;
+  isolation: isolate;
 }
 
 .slide__img-wrap:focus {
@@ -912,33 +998,43 @@ button {
 
 /* —— Responsive —— */
 @media (max-width: 960px) {
+  .hero__bg {
+    object-position: 70% 42%;
+  }
+
+  .hero__overlay {
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.45) 42%, rgba(0, 0, 0, 0.65) 100%);
+  }
+
   .hero__inner {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto;
+    align-content: end;
+    padding-bottom: clamp(32px, 8vw, 56px);
   }
 
   .hero__copy {
+    grid-column: 1;
     grid-row: 1;
     max-width: none;
-  }
-
-  .hero__watch-zone {
-    grid-column: 1;
-    grid-row: 2;
+    padding-bottom: 8vh;
   }
 
   .hero__badge {
     grid-column: 1;
-    grid-row: 3;
+    grid-row: 2;
     flex-direction: row;
     align-items: center;
     justify-self: start;
     max-width: none;
     text-align: left;
+    gap: 14px;
   }
 
   .hero__badge p {
     text-align: left;
+    max-width: 140px;
   }
 
   .watch-grid {
@@ -1016,6 +1112,29 @@ button {
 
   .section-nav {
     display: none;
+  }
+
+  .hero__bg {
+    object-position: 75% 38%;
+  }
+
+  .hero__inner {
+    padding-top: calc(56px + 20px);
+    padding-bottom: 28px;
+    min-height: 100svh;
+  }
+
+  .hero__copy {
+    padding-bottom: 4vh;
+  }
+
+  .hero__h1 {
+    font-size: clamp(2.15rem, 11vw, 3rem);
+  }
+
+  .btn--shop {
+    margin-top: 20px;
+    padding: 12px 28px;
   }
 
   .watch-grid {
