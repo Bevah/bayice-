@@ -1,9 +1,14 @@
-/* Featured slider + checkout interactions */
+/* Featured watch views + checkout (WebP only) */
 (function () {
   'use strict';
 
-  const slides = Array.from(document.querySelectorAll('.slide'));
-  const bars = Array.from(document.querySelectorAll('.feat__bar'));
+  const views = {
+    front: 'assets/watches/opt/skylight-silver-blue-front.png',
+    side: 'assets/watches/opt/skylight-silver-blue-side.png',
+  };
+
+  const img = document.getElementById('featuredWatchImg');
+  const bars = Array.from(document.querySelectorAll('#featBars .feat__bar[data-view]'));
   const tapTarget = document.getElementById('tapTarget');
   const qtyUp = document.getElementById('qtyUp');
   const qtyDown = document.getElementById('qtyDown');
@@ -11,82 +16,57 @@
   const cartBtn = document.getElementById('cartBtn');
   const checkout = document.getElementById('checkout');
 
-  if (!slides.length) return;
+  let currentView = 'front';
 
-  let current = 0;
-  let busy = false;
-  let qty = 1;
-
-  function setBarsActive(idx) {
-    bars.forEach((b, i) => {
-      const on = i === idx;
-      b.classList.toggle('feat__bar--active', on);
-      b.setAttribute('aria-selected', on ? 'true' : 'false');
+  function setBarActive(view) {
+    bars.forEach((bar) => {
+      const on = bar.dataset.view === view;
+      bar.classList.toggle('feat__bar--active', on);
+      bar.setAttribute('aria-selected', on ? 'true' : 'false');
     });
   }
 
-  function goTo(idx, instant) {
-    if (idx < 0 || idx >= slides.length || idx === current) return;
+  function setView(view, animate) {
+    if (!views[view] || !img || view === currentView) return;
+    currentView = view;
+    setBarActive(view);
 
-    if (instant) {
-      slides.forEach((s, i) => {
-        s.classList.toggle('slide--on', i === idx);
-        s.classList.remove('slide--out');
-      });
-      current = idx;
-      setBarsActive(current);
+    const apply = () => {
+      img.src = views[view];
+      img.alt =
+        view === 'side'
+          ? 'Bay Ice Skylight silver-blue dial side view'
+          : 'Bay Ice Skylight silver-blue dial 26mm';
+    };
+
+    if (!animate || typeof gsap === 'undefined') {
+      apply();
       return;
     }
 
-    if (busy) return;
-    busy = true;
-    const prev = current;
-    current = idx;
-
-    slides[prev].classList.remove('slide--on');
-    slides[prev].classList.add('slide--out');
-    slides[current].classList.add('slide--on');
-    setBarsActive(current);
-
-    setTimeout(() => {
-      slides[prev].classList.remove('slide--out');
-      busy = false;
-    }, 520);
+    gsap.to(img, {
+      opacity: 0,
+      scale: 0.96,
+      duration: 0.22,
+      ease: 'power2.in',
+      onComplete() {
+        apply();
+        gsap.to(img, { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out' });
+      },
+    });
   }
 
   bars.forEach((bar) => {
-    bar.addEventListener('click', () => goTo(+bar.dataset.to, false));
+    bar.addEventListener('click', () => setView(bar.dataset.view, true));
   });
 
-  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    const featured = document.getElementById('featured');
-    if (featured) {
-      ScrollTrigger.create({
-        trigger: featured,
-        start: 'top top',
-        end: '+=180%',
-        pin: true,
-        scrub: 1,
-        onUpdate(self) {
-          const target = Math.min(
-            slides.length - 1,
-            Math.floor(self.progress * slides.length)
-          );
-          if (target !== current) goTo(target, true);
-        },
-      });
-    }
-  }
-
-  const stage = document.getElementById('featured');
+  const stage = document.getElementById('featuredStage');
   if (stage) {
     let tx = 0;
-    let ty = 0;
     stage.addEventListener(
       'touchstart',
       (e) => {
         tx = e.touches[0].clientX;
-        ty = e.touches[0].clientY;
       },
       { passive: true }
     );
@@ -94,10 +74,9 @@
       'touchend',
       (e) => {
         const dx = e.changedTouches[0].clientX - tx;
-        const dy = Math.abs(e.changedTouches[0].clientY - ty);
-        if (Math.abs(dx) > 44 && dy < 70) {
-          if (dx < 0 && current < slides.length - 1) goTo(current + 1);
-          if (dx > 0 && current > 0) goTo(current - 1);
+        if (Math.abs(dx) > 44) {
+          if (dx < 0 && currentView === 'front') setView('side', true);
+          if (dx > 0 && currentView === 'side') setView('front', true);
         }
       },
       { passive: true }
@@ -120,7 +99,7 @@
   }
 
   function setQty(n) {
-    qty = Math.max(1, Math.min(n, 99));
+    const qty = Math.max(1, Math.min(n, 99));
     if (qtyNum) qtyNum.textContent = qty;
     if (typeof gsap !== 'undefined' && qtyNum) {
       gsap.fromTo(
@@ -131,8 +110,8 @@
     }
   }
 
-  if (qtyUp) qtyUp.addEventListener('click', () => setQty(qty + 1));
-  if (qtyDown) qtyDown.addEventListener('click', () => setQty(qty - 1));
+  if (qtyUp) qtyUp.addEventListener('click', () => setQty(+qtyNum.textContent + 1));
+  if (qtyDown) qtyDown.addEventListener('click', () => setQty(+qtyNum.textContent - 1));
 
   if (cartBtn) {
     const cartHTML = cartBtn.innerHTML;

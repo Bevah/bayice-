@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -38,12 +39,13 @@
 <section class="hero" id="hero" aria-label="Bay Ice hero">
   <video
     id="heroBgVideo"
+    poster="assets/watches/opt/skylight-silver-blue-front.png"
     class="hero__bg"
     autoplay
     muted
     loop
     playsinline
-    preload="auto"
+    preload="metadata"
     aria-hidden="true"
   >
     <source src="assets/hero/hero%20main.mp4" type="video/mp4" />
@@ -58,10 +60,11 @@
     </div>
 
     <aside class="hero__badge">
-      <div class="hero__badge-thumb">
+      <div class="hero__badge-thumb" id="displayCarousel">
         <img
-          src="assets/watches/skylight-silver-blue-detail.jpg"
-          alt="Diamond detail on Skylight dial"
+          id="carouselImg"
+          src="assets/display/IMG-20260519-WA0033.jpg"
+          alt="Bay Ice accessory"
           width="120"
           height="120"
           loading="eager"
@@ -72,7 +75,7 @@
   </div>
 </section>
 
-<section class="col-section js-reveal" id="halo">
+<section class="col-section stack-panel js-reveal" id="halo">
   <div class="section-nav" aria-hidden="true">
     <div class="section-nav__left"><span>Home</span><span>Collection</span><span>Store</span><span>Contact</span></div>
     <span class="section-nav__brand">BAY ICE</span>
@@ -85,22 +88,22 @@
     </header>
     <div class="watch-grid">
       <article class="watch-card js-card" data-halo="green">
-        <div class="watch-card__img-box"><img src="assets/watches/halo-gold-green.jpg" alt="Gold watch with green dial" loading="lazy" /></div>
+        <div class="watch-card__img-box"><img src="assets/watches/opt/halo-golden-green.png" alt="Gold watch with green dial" loading="lazy" /></div>
         <p class="watch-card__name">Gold and Green Dial</p>
       </article>
       <article class="watch-card js-card" data-halo="purple">
-        <div class="watch-card__img-box"><img src="assets/watches/halo-silver-pink.jpg" alt="Silver watch with pink dial" loading="lazy" /></div>
+        <div class="watch-card__img-box"><img src="assets/watches/opt/halo-silver-pink.png" alt="Silver watch with pink dial" loading="lazy" /></div>
         <p class="watch-card__name">Silver and Pink Dial</p>
       </article>
       <article class="watch-card js-card" data-halo="blue">
-        <div class="watch-card__img-box"><img src="assets/watches/halo-silver-blue.jpg" alt="Silver watch with blue dial" loading="lazy" /></div>
+        <div class="watch-card__img-box"><img src="assets/watches/opt/halo-silver-blue.png" alt="Silver watch with blue dial" loading="lazy" /></div>
         <p class="watch-card__name">Silver and Blue Dial</p>
       </article>
     </div>
   </div>
 </section>
 
-<section class="col-section col-section--skylight-grid js-reveal" id="skylight-grid">
+<section class="col-section col-section--skylight-grid stack-panel js-reveal" id="skylight-grid">
   <div class="section-nav" aria-hidden="true">
     <div class="section-nav__left"><span>Home</span><span>Collection</span><span>Store</span><span>Contact</span></div>
     <span class="section-nav__brand">BAY ICE</span>
@@ -113,72 +116,61 @@
     </header>
     <div class="watch-grid">
       <article class="watch-card js-card">
-        <div class="watch-card__img-box watch-card__img-box--sky"><img src="assets/watches/skylight-gold-front.jpg" alt="Gold diamond bezel watch" loading="lazy" /></div>
+        <div class="watch-card__img-box watch-card__img-box--sky"><img src="assets/watches/opt/skylight-gold-front.png" alt="Gold diamond bezel watch" loading="lazy" /></div>
         <p class="watch-card__name">Gold Diamond Bezel</p>
       </article>
       <article class="watch-card watch-card--spotlight js-card">
-        <div class="watch-card__img-box watch-card__img-box--sky watch-card__img-box--glow"><img src="assets/watches/skylight-silver-blue-front.jpg" alt="Silver and blue dial watch" loading="lazy" /></div>
+        <div class="watch-card__img-box watch-card__img-box--sky watch-card__img-box--glow"><img src="assets/watches/opt/skylight-silver-blue-front.png" alt="Silver and blue dial watch" loading="lazy" /></div>
         <p class="watch-card__name">Silver and Blue Dial</p>
       </article>
       <article class="watch-card js-card">
-        <div class="watch-card__img-box watch-card__img-box--sky"><img src="assets/watches/halo-gold-green-angle.jpg" alt="Iced bezel watch" loading="lazy" /></div>
+        <div class="watch-card__img-box watch-card__img-box--sky"><img src="assets/watches/opt/halo-gold-green-angle.png" alt="Iced bezel watch" loading="lazy" /></div>
         <p class="watch-card__name">VVS Bezel Bussdown</p>
       </article>
     </div>
   </div>
 </section>
 
-<section class="featured js-reveal" id="featured">
-  <div class="section-nav" aria-hidden="true">
-    <div class="section-nav__left"><span>Home</span><span>Collection</span><span>Store</span><span>Contact</span></div>
-    <span class="section-nav__brand">BAY ICE</span>
-    <div class="section-nav__right"><span>Watches</span><span>Best Deal</span><span>Services</span><span>Search</span></div>
-  </div>
-  <div class="featured__shell">
-    <div class="featured__meta">
-      <h2 class="featured__product-line"><span class="featured__name">SKYLIGHT</span><span class="featured__size">26mm</span></h2>
-      <a href="#checkout" class="btn btn--buy">Buy Now</a>
+<section class="featured stack-panel stack-panel--cover js-reveal" id="featured">
+  <div class="featured__cover">
+    <div class="section-nav" aria-hidden="true">
+      <div class="section-nav__left"><span>Home</span><span>Collection</span><span>Store</span><span>Contact</span></div>
+      <span class="section-nav__brand">BAY ICE</span>
+      <div class="section-nav__right"><span>Watches</span><span>Best Deal</span><span>Services</span><span>Search</span></div>
     </div>
-    <div class="featured__stage" id="featuredStage">
-      <span class="feat__available">AVAILABLE</span>
-      <div class="feat__actions">
-        <button type="button" class="feat__icon-btn" aria-label="Add to wishlist">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </button>
-        <button type="button" class="feat__icon-btn" aria-label="Men's">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="14" r="6"/><path d="M14 10l7-7M21 3v6M21 3h-6"/></svg>
-        </button>
-        <button type="button" class="feat__icon-btn" aria-label="Women's">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="9" r="5"/><path d="M12 14v8M8 20h8"/></svg>
-        </button>
+    <div class="featured__shell">
+      <div class="featured__meta">
+        <h2 class="featured__product-line"><span class="featured__name">SKYLIGHT</span><span class="featured__size">26mm</span></h2>
+        <a href="#checkout" class="btn btn--buy">Buy Now</a>
       </div>
-      <div class="slider" id="mainSlider">
-        <div class="slide slide--on" data-idx="0">
-          <div class="slide__img-wrap" id="tapTarget" role="button" tabindex="0" aria-label="Open product details">
-            <img src="assets/watches/skylight-silver-blue-front.jpg" alt="Skylight silver blue dial front" draggable="false" />
-          </div>
+      <div class="featured__stage" id="featuredStage">
+        <span class="feat__available">AVAILABLE</span>
+        <div class="featured__watch" id="tapTarget" role="button" tabindex="0" aria-label="Open product details">
+          <img
+            id="featuredWatchImg"
+            src="assets/watches/opt/skylight-silver-blue-front.png"
+            alt="Bay Ice Skylight silver-blue dial 26mm"
+            width="432"
+            height="592"
+            draggable="false"
+            decoding="async"
+          />
         </div>
-        <div class="slide" data-idx="1">
-          <div class="slide__img-wrap"><img src="assets/watches/skylight-silver-blue-side.jpg" alt="Skylight side view" draggable="false" /></div>
+        <p class="feat__dial-label">Silver-Blue Dial</p>
+        <div class="feat__bars feat__bars--numbered" id="featBars" role="tablist" aria-label="Product views">
+          <button type="button" class="feat__bar feat__bar--active" data-view="front" role="tab" aria-selected="true" aria-label="Front view"><span>10</span></button>
+          <button type="button" class="feat__bar" data-view="side" role="tab" aria-selected="false" aria-label="Side view"><span>11</span></button>
+          <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>12</span></span>
+          <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>13</span></span>
+          <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>14</span></span>
+          <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>15</span></span>
         </div>
-        <div class="slide" data-idx="2">
-          <div class="slide__img-wrap"><img src="assets/watches/skylight-silver-blue-detail.jpg" alt="Skylight detail" draggable="false" /></div>
-        </div>
-      </div>
-      <p class="feat__dial-label">Silver-Blue Dial</p>
-      <div class="feat__bars feat__bars--numbered" id="featBars" role="tablist" aria-label="Product views">
-        <button type="button" class="feat__bar feat__bar--active" data-to="0" role="tab" aria-selected="true" aria-label="View 10"><span>10</span></button>
-        <button type="button" class="feat__bar" data-to="1" role="tab" aria-selected="false" aria-label="View 11"><span>11</span></button>
-        <button type="button" class="feat__bar" data-to="2" role="tab" aria-selected="false" aria-label="View 12"><span>12</span></button>
-        <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>13</span></span>
-        <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>14</span></span>
-        <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>15</span></span>
       </div>
     </div>
   </div>
 </section>
 
-<section class="checkout js-reveal" id="checkout">
+<section class="checkout stack-panel stack-panel--cover js-reveal" id="checkout">
   <div class="checkout__inner">
     <header class="checkout__header">
       <div>
@@ -238,6 +230,8 @@
 </footer>
 
 <script src="js/hero.js"></script>
+<script src="js/carousel.js"></script>
+<script src="js/showcase.js"></script>
 <script src="js/slider.js"></script>
 <script src="js/scroll.js"></script>
 </body>

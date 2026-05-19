@@ -90,15 +90,15 @@
     });
   }
 
-  const checkout = document.querySelector('.checkout__inner');
-  if (checkout) {
-    gsap.from(checkout.children, {
+  const checkoutInner = document.querySelector('.checkout__inner');
+  if (checkoutInner) {
+    gsap.from(checkoutInner.children, {
       opacity: 0,
       y: 16,
       duration: 0.55,
       stagger: 0.06,
       ease: 'power2.out',
-      scrollTrigger: { trigger: checkout, start: 'top 90%' },
+      scrollTrigger: { trigger: checkoutInner, start: 'top 90%' },
     });
   }
 
@@ -134,15 +134,51 @@
     });
   });
 
-  document.querySelectorAll('.slide__img-wrap img').forEach((img) => {
-    gsap.from(img, {
+  const featured = document.getElementById('featured');
+  const featuredCover = document.querySelector('.featured__cover');
+  const featuredImg = document.getElementById('featuredWatchImg');
+
+  if (featured && featuredCover) {
+    gsap.set(featured, { opacity: 1, y: 0 });
+    gsap.from(featuredCover, {
+      yPercent: 18,
+      opacity: 0.6,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: featured,
+        start: 'top bottom',
+        end: 'top top',
+        scrub: 0.6,
+      },
+    });
+  }
+
+  if (featuredImg) {
+    gsap.from(featuredImg, {
       scale: 0.9,
       opacity: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: '#featured', start: 'top 75%' },
+      y: 32,
+      duration: 0.9,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: featured || featuredImg, start: 'top 72%' },
     });
-  });
+  }
+
+  const checkoutSection = document.getElementById('checkout');
+  if (checkoutSection && checkoutInner) {
+    gsap.set(checkoutSection, { opacity: 1, y: 0 });
+    gsap.from(checkoutInner, {
+      yPercent: 12,
+      opacity: 0.85,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: checkoutSection,
+        start: 'top bottom',
+        end: 'top top',
+        scrub: 0.5,
+      },
+    });
+  }
 
   window.addEventListener('load', () => ScrollTrigger.refresh());
 })();

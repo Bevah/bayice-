@@ -2,3 +2,5 @@ node_modules/
 graphifyy-env/
 .DS_Store
 *.log
+
+# Keep assets/watches/opt/ — optimized images are used in production
