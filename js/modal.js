@@ -1,4 +1,4 @@
-/* Watch showcase modal functionality */
+/* Watch showcase modal functionality — Performance Optimized */
 (function () {
   'use strict';
 
@@ -89,13 +89,30 @@
   const modalProductLine = document.getElementById('modalProductLine');
   const modalProductName = document.getElementById('modalProductName');
   const modalProductPrice = document.getElementById('modalProductPrice');
-  const modalFeatBars = document.getElementById('modalFeatBars');
   const modalWatchStage = document.getElementById('modalWatchStage');
   const modalWatchGrid = document.getElementById('modalWatchGrid');
   const modalBars = Array.from(document.querySelectorAll('#modalFeatBars .modal__bar[data-view]'));
 
   let currentWatch = 'skylight-blue';
   let currentView = 'front';
+  let isInitialized = false;
+
+  // Image cache to prevent flickering
+  const imageCache = {};
+
+  // Preload images for a specific watch
+  function preloadWatchImages(catalogKey) {
+    const watch = watchCatalog[catalogKey];
+    if (!watch) return;
+    
+    Object.values(watch.views).forEach(src => {
+      if (!imageCache[src]) {
+        const img = new Image();
+        img.src = src;
+        imageCache[src] = img;
+      }
+    });
+  }
 
   // Function to open the modal
   function openModal() {
@@ -114,16 +131,8 @@
   // Update modal background color
   function updateModalBackgroundGradient(watch) {
     if (!modal) return;
-    
-    // Update the entire modal content background
-    // We create a deep, atmospheric version of the watch color
-    // Extract RGB if possible or use a solid fallback
-    const baseColor = watch.accentColor;
     const modalContent = modal.querySelector('.modal__content');
-    
     if (modalContent) {
-      // Create a gradient that feels like the entire page is the watch color
-      // but keeps it dark enough for white text
       modalContent.style.setProperty('--modal-bg', `radial-gradient(circle at 50% 40%, ${watch.color.replace('0.2', '0.15').replace('0.15', '0.12').replace('0.12', '0.08')}, #000 85%)`);
       modalContent.style.backgroundColor = '#000';
     }
@@ -137,27 +146,27 @@
     currentWatch = catalogKey;
     currentView = 'front';
 
-    // Update product line and name
+    // Update product info (DOM optimized)
     if (modalProductLine) modalProductLine.textContent = watch.line;
     if (modalProductName) modalProductName.textContent = watch.name;
     if (modalProductPrice) modalProductPrice.textContent = watch.price;
     if (modalDialLabel) modalDialLabel.textContent = watch.name;
 
-    // Update background color
+    // Preload views for this watch
+    preloadWatchImages(catalogKey);
+
+    // Update background
     updateModalBackgroundGradient(watch);
 
-    // Update bars and filter by available views
+    // Filter view bars
     modalBars.forEach((bar) => {
       const viewKey = bar.dataset.view;
-      if (watch.views[viewKey]) {
-        bar.classList.remove('modal__bar--hidden');
-        bar.disabled = false;
-      } else {
-        bar.classList.add('modal__bar--hidden');
-        bar.disabled = true;
-      }
-      bar.classList.toggle('modal__bar--active', viewKey === 'front');
-      bar.setAttribute('aria-selected', viewKey === 'front' ? 'true' : 'false');
+      const isAvailable = !!watch.views[viewKey];
+      bar.classList.toggle('modal__bar--hidden', !isAvailable);
+      bar.disabled = !isAvailable;
+      const isActive = viewKey === 'front';
+      bar.classList.toggle('modal__bar--active', isActive);
+      bar.setAttribute('aria-selected', isActive ? 'true' : 'false');
     });
 
     // Update main watch image
@@ -166,12 +175,17 @@
       modalWatchImg.alt = `${watch.line} ${watch.name}`;
     }
 
-    // Update watch thumbnails
-    updateWatchThumbnails(catalogKey);
+    // Update active state in collection grid
+    if (modalWatchGrid) {
+      const thumbs = modalWatchGrid.querySelectorAll('.modal__watch-thumb');
+      thumbs.forEach(thumb => {
+        thumb.classList.toggle('modal__watch-thumb--active', thumb.dataset.key === catalogKey);
+      });
+    }
   }
 
   // Set view in modal
-  function setModalView(view, animate) {
+  function setModalView(view) {
     const watch = watchCatalog[currentWatch];
     if (!watch || !watch.views[view] || !modalWatchImg || view === currentView) return;
 
@@ -182,148 +196,122 @@
       bar.setAttribute('aria-selected', on ? 'true' : 'false');
     });
 
-    if (modalWatchImg) {
-      modalWatchImg.src = watch.views[view];
-      modalWatchImg.alt = `${watch.line} ${watch.name} ${view} view`;
-    }
+    modalWatchImg.src = watch.views[view];
+    modalWatchImg.alt = `${watch.line} ${watch.name} ${view} view`;
   }
 
-  // Update watch thumbnails in modal
-  function updateWatchThumbnails(activeKey) {
-    if (!modalWatchGrid) return;
+  // Initialize watch collection thumbnails (called once)
+  function initWatchThumbnails() {
+    if (!modalWatchGrid || isInitialized) return;
 
-    // Clear existing thumbnails
     modalWatchGrid.innerHTML = '';
+    const fragment = document.createDocumentFragment();
 
-    // Create thumbnails for all watches
     Object.keys(watchCatalog).forEach((key) => {
       const watch = watchCatalog[key];
       const thumbDiv = document.createElement('div');
-      thumbDiv.className = `modal__watch-thumb ${key === activeKey ? 'modal__watch-thumb--active' : ''}`;
+      thumbDiv.className = `modal__watch-thumb ${key === currentWatch ? 'modal__watch-thumb--active' : ''}`;
       thumbDiv.dataset.key = key;
 
-      // Get the front view image for the thumbnail
       const frontView = watch.views.front || Object.values(watch.views)[0];
-
       thumbDiv.innerHTML = `
-        <img src="${frontView}" alt="${watch.line} ${watch.name}" />
+        <img src="${frontView}" alt="${watch.line} ${watch.name}" loading="lazy" />
         <div class="modal__watch-thumb-name">${watch.name}</div>
       `;
 
-      thumbDiv.addEventListener('click', () => {
-        updateModalWatch(key);
-        // Update active thumbnail
-        document.querySelectorAll('.modal__watch-thumb').forEach(thumb => {
-          thumb.classList.remove('modal__watch-thumb--active');
-        });
-        thumbDiv.classList.add('modal__watch-thumb--active');
-      });
-
-      modalWatchGrid.appendChild(thumbDiv);
+      thumbDiv.addEventListener('click', () => updateModalWatch(key));
+      fragment.appendChild(thumbDiv);
     });
+
+    modalWatchGrid.appendChild(fragment);
+    isInitialized = true;
   }
 
-  // Add click listeners to watch cards to open modal
-  const watchCards = Array.from(document.querySelectorAll('.watch-card.js-card'));
-  watchCards.forEach((card, index) => {
-    if (cardToCatalog[index]) {
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', () => {
-        updateModalWatch(cardToCatalog[index].catalogKey);
+  // Event Listeners
+  function initEventListeners() {
+    // Watch cards
+    document.querySelectorAll('.watch-card.js-card').forEach((card, index) => {
+      if (cardToCatalog[index]) {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', () => {
+          updateModalWatch(cardToCatalog[index].catalogKey);
+          openModal();
+        });
+      }
+    });
+
+    // Featured watch
+    const featuredWatch = document.getElementById('tapTarget');
+    if (featuredWatch) {
+      featuredWatch.addEventListener('click', () => {
+        updateModalWatch('skylight-blue');
         openModal();
       });
     }
-  });
 
-  // Featured watch click to open modal
-  const featuredWatch = document.getElementById('tapTarget');
-  if (featuredWatch) {
-    featuredWatch.addEventListener('click', () => {
-      updateModalWatch('skylight-blue');
-      openModal();
+    // Modal view switching
+    modalBars.forEach((bar) => {
+      bar.addEventListener('click', () => {
+        if (!bar.classList.contains('modal__bar--hidden')) {
+          setModalView(bar.dataset.view);
+        }
+      });
     });
-  }
 
-  // Modal view switching buttons
-  modalBars.forEach((bar) => {
-    bar.addEventListener('click', () => {
-      if (!bar.classList.contains('modal__bar--hidden')) {
-        setModalView(bar.dataset.view, true);
-      }
+    // Close controls
+    if (modalClose) modalClose.addEventListener('click', closeModal);
+    if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && modal.classList.contains('is-open')) closeModal();
     });
-  });
 
-  // Close modal when close button is clicked
-  if (modalClose) {
-    modalClose.addEventListener('click', closeModal);
-  }
+    // 3D tilt effect (optimized with requestAnimationFrame)
+    const modalWatch = document.getElementById('modalWatchTarget');
+    if (modalWatch) {
+      let rafId = null;
+      modalWatch.addEventListener('mousemove', (e) => {
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          const rect = modalWatch.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          const img = modalWatch.querySelector('img');
+          if (img) {
+            img.style.transform = `rotateX(${-y * 12}deg) rotateY(${x * 12}deg) scale(1.04)`;
+            img.style.filter = `drop-shadow(0 ${28 + Math.abs(y) * 20}px ${56 + Math.abs(x) * 20}px rgba(52, 152, 219, 0.35)) drop-shadow(0 10px 28px rgba(0, 0, 0, 0.45))`;
+          }
+        });
+      });
 
-  // Close modal when overlay is clicked
-  if (modalOverlay) {
-    modalOverlay.addEventListener('click', closeModal);
-  }
-
-  // Close modal when Escape key is pressed
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal && modal.classList.contains('is-open')) {
-      closeModal();
+      modalWatch.addEventListener('mouseleave', () => {
+        if (rafId) cancelAnimationFrame(rafId);
+        const img = modalWatch.querySelector('img');
+        if (img) {
+          img.style.transform = '';
+          img.style.filter = '';
+        }
+      });
     }
-  });
 
-  // 3D tilt effect on mouse move for modal watch
-  const modalWatch = document.getElementById('modalWatchTarget');
-  if (modalWatch) {
-    modalWatch.addEventListener('mousemove', (e) => {
-      const rect = modalWatch.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      const rotY = x * 12;
-      const rotX = -y * 12;
-      const img = modalWatch.querySelector('img');
-      if (img) {
-        img.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.04)`;
-        img.style.filter = `drop-shadow(0 ${28 + Math.abs(y) * 20}px ${56 + Math.abs(x) * 20}px rgba(52, 152, 219, 0.35)) drop-shadow(0 10px 28px rgba(0, 0, 0, 0.45))`;
-      }
-    });
-
-    modalWatch.addEventListener('mouseleave', () => {
-      const img = modalWatch.querySelector('img');
-      if (img) {
-        img.style.transform = '';
-        img.style.filter = '';
-      }
-    });
-  }
-
-  // Touch swipe for view changes in modal
-  const modalStage = document.getElementById('modalWatchStage');
-  if (modalStage) {
-    let tx = 0;
-    modalStage.addEventListener(
-      'touchstart',
-      (e) => {
-        tx = e.touches[0].clientX;
-      },
-      { passive: true }
-    );
-    modalStage.addEventListener(
-      'touchend',
-      (e) => {
+    // Touch swipe (passive listeners)
+    const modalStage = document.getElementById('modalWatchStage');
+    if (modalStage) {
+      let tx = 0;
+      modalStage.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
+      modalStage.addEventListener('touchend', (e) => {
         const watch = watchCatalog[currentWatch];
         const viewKeys = Object.keys(watch.views);
         const currentIdx = viewKeys.indexOf(currentView);
-
         const dx = e.changedTouches[0].clientX - tx;
         if (Math.abs(dx) > 44) {
-          if (dx < 0 && currentIdx < viewKeys.length - 1) {
-            setModalView(viewKeys[currentIdx + 1], true);
-          }
-          if (dx > 0 && currentIdx > 0) {
-            setModalView(viewKeys[currentIdx - 1], true);
-          }
+          if (dx < 0 && currentIdx < viewKeys.length - 1) setModalView(viewKeys[currentIdx + 1]);
+          if (dx > 0 && currentIdx > 0) setModalView(viewKeys[currentIdx - 1]);
         }
-      },
-      { passive: true }
-    );
+      }, { passive: true });
+    }
   }
+
+  // Initialize
+  initWatchThumbnails();
+  initEventListeners();
 })();
