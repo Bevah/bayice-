@@ -1,0 +1,406 @@
+/* —— Modal Redesign: Full-Page Feel —— */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000; /* Above nav */
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--black);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.modal.is-open .modal__overlay {
+  opacity: 1;
+}
+
+.modal__content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--modal-bg, var(--black));
+  overflow-y: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s ease, background 0.8s ease;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal.is-open .modal__content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.modal__close {
+  position: fixed;
+  top: clamp(16px, 4vw, 32px);
+  right: clamp(16px, 4vw, 32px);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  font-size: 28px;
+  font-weight: 200;
+  border: 1px solid var(--border);
+  z-index: 100;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.modal__close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: rotate(90deg);
+}
+
+.modal__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(60px, 8vw, 100px) clamp(20px, 5vw, 60px) clamp(40px, 6vw, 80px);
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.modal__main {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 6vw, 80px);
+  flex: 1;
+}
+
+/* Upper section with watch and details */
+.modal__top {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(40px, 6vw, 100px);
+  align-items: center;
+}
+
+.modal__watch-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border-radius: 40px;
+  padding: clamp(30px, 5vw, 60px);
+  transition: background 0.8s ease;
+  min-height: 500px;
+}
+
+.modal__available {
+  position: absolute;
+  top: 32px;
+  right: 40px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.modal__watch {
+  width: 100%;
+  max-width: 420px;
+  cursor: pointer;
+  perspective: 1200px;
+}
+
+.modal__watch img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 550px;
+  object-fit: contain;
+  mix-blend-mode: lighten;
+  filter: drop-shadow(0 32px 64px rgba(52, 152, 219, 0.25));
+  transition: transform 0.4s var(--ease), filter 0.4s ease;
+  animation: watchFloat 5s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.modal__dial-label {
+  margin-top: 24px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.modal__bars--numbered {
+  margin-top: 32px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.modal__bar {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 0.3s ease;
+}
+
+.modal__bar::before {
+  content: "";
+  display: block;
+  width: 2px;
+  height: 16px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: height 0.3s var(--ease), background 0.3s;
+}
+
+.modal__bar span {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.modal__bar--active {
+  color: var(--accent);
+}
+
+.modal__bar--active::before {
+  height: 30px;
+  background: #fff;
+}
+
+.modal__bar--hidden {
+  display: none;
+}
+
+/* Sidebar Details */
+.modal__details {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 480px;
+}
+
+.modal__product-info {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 32px;
+}
+
+.modal__product-line {
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.modal__product-name {
+  font-size: 16px;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.modal__product-price {
+  margin-top: 24px;
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 700;
+  color: #fff;
+}
+
+.modal__actions {
+  display: flex;
+  gap: 16px;
+}
+
+.modal__buy-btn {
+  flex: 1.2;
+  background: var(--accent);
+  color: #fff;
+  padding: 18px 32px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.modal__cart-btn {
+  flex: 1;
+  background: transparent;
+  color: #fff;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.modal__cart-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #fff;
+}
+
+/* Bottom Watch Selector: Box Style */
+.modal__watch-selector {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  padding-top: 40px;
+}
+
+.modal__watch-selector h3 {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.modal__watch-grid {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 20px;
+  scrollbar-width: none; /* Firefox */
+}
+
+.modal__watch-grid::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.modal__watch-thumb {
+  flex: 0 0 180px;
+  background: var(--gray-900);
+  border-radius: 20px;
+  padding: 20px 15px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.4s var(--ease);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal__watch-thumb:hover {
+  transform: translateY(-8px);
+  background: var(--gray-800);
+  border-color: var(--border-strong);
+}
+
+.modal__watch-thumb--active {
+  background: #151515;
+  border-color: var(--accent);
+  box-shadow: 0 0 24px rgba(52, 152, 219, 0.15);
+}
+
+.modal__watch-thumb img {
+  width: 100%;
+  height: auto;
+  max-height: 120px;
+  object-fit: contain;
+  mix-blend-mode: lighten;
+  transition: transform 0.4s var(--ease);
+}
+
+.modal__watch-thumb:hover img {
+  transform: scale(1.1);
+}
+
+.modal__watch-thumb-name {
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+  transition: color 0.3s ease;
+}
+
+.modal__watch-thumb--active .modal__watch-thumb-name {
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .modal__top {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .modal__watch-stage {
+    min-height: auto;
+  }
+  
+  .modal__details {
+    max-width: none;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .modal__product-info {
+    width: 100%;
+  }
+  
+  .modal__actions {
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 640px) {
+  .modal__body {
+    padding-top: 80px;
+  }
+  
+  .modal__watch img {
+    max-height: 380px;
+  }
+  
+  .modal__actions {
+    flex-direction: column;
+  }
+  
+  .modal__watch-thumb {
+    flex: 0 0 140px;
+  }
+}

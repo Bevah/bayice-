@@ -512,8 +512,10 @@ button {
 }
 
 @keyframes watchFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%, 100% { transform: translateY(0) rotateX(0) rotateY(0); }
+  25% { transform: translateY(-8px) rotateX(1deg) rotateY(1deg); }
+  50% { transform: translateY(-12px) rotateX(2deg) rotateY(2deg); }
+  75% { transform: translateY(-8px) rotateX(1deg) rotateY(-1deg); }
 }
 
 .watch-card:hover .watch-card__img-box img {
@@ -579,18 +581,24 @@ button {
 }
 
 .featured__shell {
-  display: flex;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
   align-items: center;
-  justify-content: space-between;
-  gap: clamp(24px, 4vw, 48px);
+  gap: clamp(20px, 4vw, 60px);
   padding: clamp(36px, 6vw, 72px) clamp(20px, 4vw, 48px) clamp(48px, 7vw, 88px);
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .featured__meta {
-  flex-shrink: 0;
-  max-width: 220px;
+  text-align: left;
+  z-index: 5;
+}
+
+.featured__meta .btn--buy {
+  margin-top: 16px;
+  width: 100%;
 }
 
 .featured__product-line {
@@ -618,17 +626,21 @@ button {
 
 .featured__stage {
   position: relative;
-  flex: 1;
-  max-width: 420px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+.feat__info-aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: clamp(80px, 15vh, 160px);
+  text-align: right;
+  z-index: 5;
+}
+
 .feat__available {
-  position: absolute;
-  top: 0;
-  right: 0;
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.2em;
@@ -668,6 +680,7 @@ button {
   transition: transform 0.45s var(--ease), filter 0.4s;
   animation: watchFloat 4.5s ease-in-out infinite;
   transform-style: preserve-3d;
+  transform-origin: center center;
 }
 
 .featured__watch:hover img {
@@ -675,7 +688,6 @@ button {
 }
 
 .feat__dial-label {
-  margin-top: 16px;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.22em;
@@ -684,6 +696,7 @@ button {
 }
 
 .feat__bars {
+  grid-column: 1 / -1;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -1085,15 +1098,23 @@ button {
   }
 
   .featured__shell {
+    display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     padding-top: 28px;
     padding-bottom: 40px;
+    gap: 20px;
   }
 
   .featured__meta {
-    max-width: none;
-    text-align: left;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .feat__info-aside {
+    align-items: center;
+    text-align: center;
+    gap: 8px;
   }
 
   .featured__stage {
@@ -1110,9 +1131,11 @@ button {
   }
 
   .feat__available {
-    position: relative;
-    align-self: flex-end;
-    margin-bottom: 8px;
+    margin-bottom: 0;
+  }
+
+  .feat__bars {
+    margin-top: 20px;
   }
 }
 

@@ -9,13 +9,10 @@
 
   const img = document.getElementById('featuredWatchImg');
   const bars = Array.from(document.querySelectorAll('#featBars .feat__bar[data-view]'));
-  const tapTarget = document.getElementById('tapTarget');
   const qtyUp = document.getElementById('qtyUp');
   const qtyDown = document.getElementById('qtyDown');
   const qtyNum = document.getElementById('qtyNum');
   const cartBtn = document.getElementById('cartBtn');
-  const checkout = document.getElementById('checkout');
-
   let currentView = 'front';
 
   function setBarActive(view) {
@@ -81,21 +78,6 @@
       },
       { passive: true }
     );
-  }
-
-  function scrollToCheckout() {
-    if (!checkout) return;
-    checkout.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  if (tapTarget) {
-    tapTarget.addEventListener('click', scrollToCheckout);
-    tapTarget.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        scrollToCheckout();
-      }
-    });
   }
 
   function setQty(n) {

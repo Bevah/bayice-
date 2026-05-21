@@ -11,6 +11,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/modal.css" />
 </head>
 <body>
 
@@ -124,7 +125,7 @@
         <p class="watch-card__name">Silver and Blue Dial</p>
       </article>
       <article class="watch-card js-card">
-        <div class="watch-card__img-box watch-card__img-box--sky"><img src="assets/watches/opt/halo-gold-green-angle.png" alt="Iced bezel watch" loading="lazy" /></div>
+        <div class="watch-card__img-box watch-card__img-box--sky"><img src="assets/watches/opt/skylight-vvs-bussdown.png" alt="VVS Bezel Bussdown watch" loading="lazy" /></div>
         <p class="watch-card__name">VVS Bezel Bussdown</p>
       </article>
     </div>
@@ -144,7 +145,6 @@
         <a href="#checkout" class="btn btn--buy">Buy Now</a>
       </div>
       <div class="featured__stage" id="featuredStage">
-        <span class="feat__available">AVAILABLE</span>
         <div class="featured__watch" id="tapTarget" role="button" tabindex="0" aria-label="Open product details">
           <img
             id="featuredWatchImg"
@@ -156,15 +156,18 @@
             decoding="async"
           />
         </div>
+      </div>
+      <div class="feat__info-aside">
+        <span class="feat__available">AVAILABLE</span>
         <p class="feat__dial-label">Silver-Blue Dial</p>
-        <div class="feat__bars feat__bars--numbered" id="featBars" role="tablist" aria-label="Product views">
-          <button type="button" class="feat__bar feat__bar--active" data-view="front" role="tab" aria-selected="true" aria-label="Front view"><span>10</span></button>
-          <button type="button" class="feat__bar" data-view="side" role="tab" aria-selected="false" aria-label="Side view"><span>11</span></button>
-          <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>12</span></span>
-          <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>13</span></span>
-          <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>14</span></span>
-          <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>15</span></span>
-        </div>
+      </div>
+      <div class="feat__bars feat__bars--numbered" id="featBars" role="tablist" aria-label="Product views">
+        <button type="button" class="feat__bar feat__bar--active" data-view="front" role="tab" aria-selected="true" aria-label="Front view"><span>10</span></button>
+        <button type="button" class="feat__bar" data-view="side" role="tab" aria-selected="false" aria-label="Side view"><span>11</span></button>
+        <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>12</span></span>
+        <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>13</span></span>
+        <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>14</span></span>
+        <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>15</span></span>
       </div>
     </div>
   </div>
@@ -229,10 +232,67 @@
   <p class="footer__copy">© 2026 Bay Ice. All rights reserved.</p>
 </footer>
 
+<!-- Watch Showcase Modal -->
+<div class="modal" id="watchModal" aria-hidden="true">
+  <div class="modal__overlay" id="modalOverlay"></div>
+  <div class="modal__content" role="dialog" aria-label="Watch details dialog" aria-modal="true">
+    <button class="modal__close" id="modalClose" aria-label="Close dialog">×</button>
+    <div class="modal__body">
+      <div class="modal__main">
+        <div class="modal__top">
+          <div class="modal__watch-stage" id="modalWatchStage">
+            <span class="modal__available">AVAILABLE</span>
+            <div class="modal__watch" id="modalWatchTarget">
+              <img
+                id="modalWatchImg"
+                src="assets/watches/opt/skylight-silver-blue-front.png"
+                alt="Bay Ice Skylight silver-blue dial 26mm"
+                width="432"
+                height="592"
+                draggable="false"
+                decoding="async"
+              />
+            </div>
+            <p class="modal__dial-label" id="modalDialLabel">Silver-Blue Dial</p>
+            <div class="modal__bars modal__bars--numbered" id="modalFeatBars" role="tablist" aria-label="Product views">
+              <button type="button" class="modal__bar modal__bar--active" data-view="front" role="tab" aria-selected="true" aria-label="Front view"><span>10</span></button>
+              <button type="button" class="modal__bar" data-view="angle" role="tab" aria-selected="false" aria-label="Angle view"><span>11</span></button>
+              <button type="button" class="modal__bar" data-view="side" role="tab" aria-selected="false" aria-label="Side view"><span>12</span></button>
+              <button type="button" class="modal__bar" data-view="back" role="tab" aria-selected="false" aria-label="Back view"><span>13</span></button>
+              <span class="modal__bar modal__bar--decor" aria-hidden="true"><span>14</span></span>
+              <span class="modal__bar modal__bar--decor" aria-hidden="true"><span>15</span></span>
+            </div>
+          </div>
+          <div class="modal__details">
+            <div class="modal__product-info">
+              <h2 class="modal__product-line" id="modalProductLine">SKYLIGHT</h2>
+              <p class="modal__product-name" id="modalProductName">Silver-Blue Dial 26mm</p>
+              <p class="modal__product-price" id="modalProductPrice">₦ 980,000.00</p>
+            </div>
+            <div class="modal__actions">
+              <button type="button" class="btn btn--buy modal__buy-btn">Buy Now</button>
+              <button type="button" class="btn btn--cart modal__cart-btn">
+                <svg class="btn--cart__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                Add to cart
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="modal__watch-selector">
+          <h3>Collection</h3>
+          <div class="modal__watch-grid" id="modalWatchGrid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="js/hero.js"></script>
 <script src="js/carousel.js"></script>
-<script src="js/showcase.js"></script>
 <script src="js/slider.js"></script>
 <script src="js/scroll.js"></script>
+<script src="js/modal.js"></script>
 </body>
 </html>
