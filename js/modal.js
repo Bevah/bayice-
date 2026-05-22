@@ -133,7 +133,8 @@
     if (!modal) return;
     const modalContent = modal.querySelector('.modal__content');
     if (modalContent) {
-      modalContent.style.setProperty('--modal-bg', `radial-gradient(circle at 50% 40%, ${watch.color.replace('0.2', '0.15').replace('0.15', '0.12').replace('0.12', '0.08')}, #000 85%)`);
+      const baseColor = watch.color.replace(/[\d.]+\)$/, '0.08)');
+      modalContent.style.setProperty('--modal-bg', `radial-gradient(circle at 50% 40%, ${baseColor}, #000 85%)`);
       modalContent.style.backgroundColor = '#000';
     }
   }

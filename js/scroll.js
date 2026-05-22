@@ -5,11 +5,11 @@
   if (typeof gsap === 'undefined') return;
   gsap.registerPlugin(ScrollTrigger);
 
-  document.querySelectorAll('.js-reveal').forEach((el) => {
+  document.querySelectorAll('.js-reveal:not(.stack-panel--cover)').forEach((el) => {
     gsap.to(el, {
       opacity: 1,
       y: 0,
-      duration: 0.85,
+      duration: 0.75,
       ease: 'power2.out',
       scrollTrigger: {
         trigger: el,
@@ -34,9 +34,9 @@
     el.insertAdjacentElement('afterend', line);
 
     gsap.to(line, {
-      width: 56,
-      duration: 0.75,
-      ease: 'power3.out',
+      width: 80,
+      duration: 0.6,
+      ease: 'power2.out',
       scrollTrigger: { trigger: el, start: 'top 85%' },
     });
   });
@@ -45,25 +45,12 @@
     const cards = grid.querySelectorAll('.watch-card');
     gsap.from(cards, {
       opacity: 0,
-      y: 48,
-      scale: 0.94,
-      rotateX: 8,
-      transformOrigin: '50% 100%',
-      duration: 0.75,
-      stagger: 0.1,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: grid, start: 'top 86%' },
-    });
-    cards.forEach((card) => {
-      const img = card.querySelector('.watch-card__img-box img');
-      if (!img) return;
-      gsap.from(img, {
-        scale: 0.88,
-        opacity: 0,
-        duration: 0.7,
-        ease: 'power2.out',
-        scrollTrigger: { trigger: card, start: 'top 88%' },
-      });
+      y: 32,
+      scale: 0.96,
+      duration: 0.6,
+      stagger: 0.08,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: grid, start: 'top 88%' },
     });
   });
 
@@ -102,47 +89,13 @@
     });
   }
 
-  const footer = document.querySelector('.footer');
-  if (footer) {
-    gsap.from('.footer__brand', {
-      opacity: 0,
-      y: 14,
-      duration: 0.65,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: footer, start: 'top 92%' },
-    });
-    gsap.from('.footer__tagline, .footer__links, .footer__copy', {
-      opacity: 0,
-      y: 10,
-      stagger: 0.07,
-      duration: 0.5,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: footer, start: 'top 90%' },
-    });
-  }
-
-  document.querySelectorAll('.watch-card__img-box img').forEach((img) => {
-    gsap.to(img, {
-      y: -12,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: img.closest('.watch-card'),
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 0.8,
-      },
-    });
-  });
-
   const featured = document.getElementById('featured');
   const featuredCover = document.querySelector('.featured__cover');
-  const featuredImg = document.getElementById('featuredWatchImg');
 
   if (featured && featuredCover) {
-    gsap.set(featured, { opacity: 1, y: 0 });
     gsap.from(featuredCover, {
-      yPercent: 18,
-      opacity: 0.6,
+      yPercent: 14,
+      opacity: 0.7,
       ease: 'none',
       scrollTrigger: {
         trigger: featured,
@@ -153,23 +106,23 @@
     });
   }
 
+  const featuredImg = document.getElementById('featuredWatchImg');
   if (featuredImg) {
     gsap.from(featuredImg, {
-      scale: 0.9,
+      scale: 0.92,
       opacity: 0,
-      y: 32,
-      duration: 0.9,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: featured || featuredImg, start: 'top 72%' },
+      y: 24,
+      duration: 0.75,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: featuredImg, start: 'top 80%' },
     });
   }
 
   const checkoutSection = document.getElementById('checkout');
   if (checkoutSection && checkoutInner) {
-    gsap.set(checkoutSection, { opacity: 1, y: 0 });
     gsap.from(checkoutInner, {
-      yPercent: 12,
-      opacity: 0.85,
+      yPercent: 10,
+      opacity: 0.9,
       ease: 'none',
       scrollTrigger: {
         trigger: checkoutSection,

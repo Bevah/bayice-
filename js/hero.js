@@ -61,20 +61,18 @@
 
   if (typeof gsap === 'undefined') return;
 
-  gsap.set('#hero .hero__cta', { opacity: 1, visibility: 'visible' });
-
-  const tl = gsap.timeline({ delay: 0.2 });
-  tl.from('.hero__h1', { y: 48, opacity: 0, duration: 0.9, ease: 'power3.out' });
-  tl.from('.hero__sub', { y: 16, opacity: 0, duration: 0.55, ease: 'power2.out' }, '-=0.45');
+  const tl = gsap.timeline({ delay: 0.15 });
+  tl.from('.hero__h1', { y: 40, opacity: 0, duration: 0.75, ease: 'power3.out' });
+  tl.from('.hero__sub', { y: 14, opacity: 0, duration: 0.45, ease: 'power2.out' }, '-=0.35');
   tl.from(
     '#hero .hero__cta',
-    { y: 18, opacity: 0, scale: 0.92, duration: 0.55, ease: 'back.out(1.6)' },
-    '-=0.35'
+    { y: 16, opacity: 0, scale: 0.95, duration: 0.45, ease: 'power2.out' },
+    '-=0.3'
   );
-  tl.from('.hero__badge', { y: 20, opacity: 0, duration: 0.55, ease: 'power2.out' }, '-=0.25');
+  tl.from('.hero__badge', { y: 16, opacity: 0, duration: 0.45, ease: 'power2.out' }, '-=0.2');
   tl.from(
     '.hero__badge-thumb img',
-    { scale: 0.85, opacity: 0, duration: 0.6, ease: 'power2.out' },
-    '-=0.4'
+    { scale: 0.9, opacity: 0, duration: 0.5, ease: 'power2.out' },
+    '-=0.3'
   );
 })();
