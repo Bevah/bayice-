@@ -1,4 +1,3 @@
-/* Scroll reveals + parallax */
 (function () {
   'use strict';
 
@@ -54,44 +53,21 @@
     });
   });
 
-  const meta = document.querySelector('.featured__meta');
-  if (meta) {
-    gsap.from(Array.from(meta.children), {
+  // Featured section entrance
+  const featuredImg = document.getElementById('featuredWatchImg');
+  if (featuredImg) {
+    gsap.from(featuredImg, {
+      scale: 0.92,
       opacity: 0,
-      x: -20,
-      duration: 0.6,
-      stagger: 0.08,
+      y: 24,
+      duration: 0.75,
       ease: 'power2.out',
-      scrollTrigger: { trigger: meta, start: 'top 82%' },
-    });
-  }
-
-  const stage = document.getElementById('featuredStage');
-  if (stage) {
-    gsap.from(stage, {
-      opacity: 0,
-      scale: 0.96,
-      duration: 0.85,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: stage, start: 'top 82%' },
-    });
-  }
-
-  const checkoutInner = document.querySelector('.checkout__inner');
-  if (checkoutInner) {
-    gsap.from(checkoutInner.children, {
-      opacity: 0,
-      y: 16,
-      duration: 0.55,
-      stagger: 0.06,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: checkoutInner, start: 'top 90%' },
+      scrollTrigger: { trigger: featuredImg, start: 'top 80%' },
     });
   }
 
   const featured = document.getElementById('featured');
   const featuredCover = document.querySelector('.featured__cover');
-
   if (featured && featuredCover) {
     gsap.from(featuredCover, {
       yPercent: 14,
@@ -106,15 +82,16 @@
     });
   }
 
-  const featuredImg = document.getElementById('featuredWatchImg');
-  if (featuredImg) {
-    gsap.from(featuredImg, {
-      scale: 0.92,
+  // Checkout entrance
+  const checkoutInner = document.querySelector('.checkout__inner');
+  if (checkoutInner) {
+    gsap.from(checkoutInner.children, {
       opacity: 0,
-      y: 24,
-      duration: 0.75,
+      y: 16,
+      duration: 0.55,
+      stagger: 0.06,
       ease: 'power2.out',
-      scrollTrigger: { trigger: featuredImg, start: 'top 80%' },
+      scrollTrigger: { trigger: checkoutInner, start: 'top 90%' },
     });
   }
 

@@ -125,12 +125,8 @@
 <section class="featured stack-panel stack-panel--cover js-reveal" id="featured">
   <div class="featured__cover">
     <div class="featured__shell">
-      <div class="featured__meta">
-        <h2 class="featured__product-line"><span class="featured__name">SKYLIGHT</span><span class="featured__size">26mm</span></h2>
-        <a href="#checkout" class="btn btn--buy">Buy Now</a>
-      </div>
       <div class="featured__stage" id="featuredStage">
-        <div class="featured__watch" id="tapTarget" role="button" tabindex="0" aria-label="Open product details">
+        <div class="featured__watch" id="tapTarget" role="button" tabindex="0" aria-label="Quick view">
           <img
             id="featuredWatchImg"
             src="assets/watches/opt/skylight-silver-blue-front.png"
@@ -142,17 +138,9 @@
           />
         </div>
       </div>
-      <div class="feat__info-aside">
-        <span class="feat__available">AVAILABLE</span>
-        <p class="feat__dial-label">Silver-Blue Dial</p>
-      </div>
-      <div class="feat__bars feat__bars--numbered" id="featBars" role="tablist" aria-label="Product views">
-        <button type="button" class="feat__bar feat__bar--active" data-view="front" role="tab" aria-selected="true" aria-label="Front view"><span>10</span></button>
-        <button type="button" class="feat__bar" data-view="side" role="tab" aria-selected="false" aria-label="Side view"><span>11</span></button>
-        <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>12</span></span>
-        <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>13</span></span>
-        <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>14</span></span>
-        <span class="feat__bar feat__bar--decor" aria-hidden="true"><span>15</span></span>
+      <div class="featured__cta">
+        <span class="featured__label">SKYLIGHT · 26mm</span>
+        <button type="button" class="btn btn--buy" id="featuredQuickView">Quick View</button>
       </div>
     </div>
   </div>
@@ -160,51 +148,9 @@
 
 <section class="checkout stack-panel stack-panel--cover js-reveal" id="checkout">
   <div class="checkout__inner">
-    <header class="checkout__header">
-      <div>
-        <h2 class="checkout__title">Bay Ice Skylight Watch</h2>
-        <div class="checkout__row">
-          <p class="checkout__variant">Silver-Blue Dial 26mm</p>
-          <p class="checkout__price">₦ 980,000.00</p>
-        </div>
-      </div>
-    </header>
-    <p class="checkout__desc">Experience refined elegance with the BAY ICE SKYLIGHT. Crafted with premium materials and timeless design, it is more than a watch — it is a statement of confidence and style.</p>
-    <div class="checkout__specs">
-      <h3 class="checkout__specs-title">Specifications</h3>
-      <ul class="checkout__specs-list">
-        <li><span>Movement</span><span>Seiko VH63</span></li>
-        <li><span>Case</span><span>316L Stainless Steel (40mm)</span></li>
-        <li><span>Glass</span><span>Sapphire</span></li>
-        <li><span>Water Resistance</span><span>5 ATM</span></li>
-        <li><span>Luminous</span><span>Swiss Super-LumiNova</span></li>
-        <li><span>Strap</span><span>Stainless Steel (20mm)</span></li>
-      </ul>
-    </div>
-    <div class="checkout__actions-row">
-      <div class="qty" aria-label="Quantity">
-        <button type="button" class="qty__btn" id="qtyDown">−</button>
-        <span class="qty__num" id="qtyNum">1</span>
-        <button type="button" class="qty__btn" id="qtyUp">+</button>
-      </div>
-      <button type="button" class="btn btn--cart" id="cartBtn">
-        <svg class="btn--cart__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
-        </svg>
-        Add to cart
-      </button>
-    </div>
-    <button type="button" class="btn btn--shopify">Buy with SHOP</button>
-    <footer class="checkout__trust">
-      <p>Secure and trusted checkout with</p>
-      <div class="pay-badges">
-        <span class="pay-badge pay-badge--visa">VISA</span>
-        <span class="pay-badge pay-badge--mc" aria-label="Mastercard"></span>
-        <span class="pay-badge pay-badge--amex">AMEX</span>
-        <span class="pay-badge pay-badge--disc">DISCOVER</span>
-      </div>
-      <a href="#" class="checkout__more-pay">More payment options</a>
-    </footer>
+    <h2 class="checkout__title">Bay Ice Skylight Watch</h2>
+    <p class="checkout__desc">Experience refined elegance with the BAY ICE SKYLIGHT. Crafted with premium materials and timeless design.</p>
+    <button type="button" class="btn btn--shopify" id="checkoutQuickView">View Full Details →</button>
   </div>
 </section>
 
@@ -217,13 +163,14 @@
   <p class="footer__copy">© 2026 Bay Ice. All rights reserved.</p>
 </footer>
 
-<!-- Watch Showcase Modal -->
+<!-- Unified Product Modal -->
 <div class="modal" id="watchModal" aria-hidden="true">
   <div class="modal__overlay" id="modalOverlay"></div>
   <div class="modal__content" role="dialog" aria-label="Watch details dialog" aria-modal="true">
     <button class="modal__close" id="modalClose" aria-label="Close dialog">×</button>
     <div class="modal__body">
       <div class="modal__main">
+        <!-- Top: Watch + Details side-by-side -->
         <div class="modal__top">
           <div class="modal__watch-stage" id="modalWatchStage">
             <span class="modal__available">AVAILABLE</span>
@@ -239,7 +186,7 @@
               />
             </div>
             <p class="modal__dial-label" id="modalDialLabel">Silver-Blue Dial</p>
-            <div class="modal__bars modal__bars--numbered" id="modalFeatBars" role="tablist" aria-label="Product views">
+            <div class="modal__bars" id="modalFeatBars" role="tablist" aria-label="Product views">
               <button type="button" class="modal__bar modal__bar--active" data-view="front" role="tab" aria-selected="true" aria-label="Front view"><span>10</span></button>
               <button type="button" class="modal__bar" data-view="angle" role="tab" aria-selected="false" aria-label="Angle view"><span>11</span></button>
               <button type="button" class="modal__bar" data-view="side" role="tab" aria-selected="false" aria-label="Side view"><span>12</span></button>
@@ -248,25 +195,57 @@
               <span class="modal__bar modal__bar--decor" aria-hidden="true"><span>15</span></span>
             </div>
           </div>
-          <div class="modal__details">
+
+          <!-- Details Panel -->
+          <div class="modal__details" id="modalDetails">
             <div class="modal__product-info">
               <h2 class="modal__product-line" id="modalProductLine">SKYLIGHT</h2>
               <p class="modal__product-name" id="modalProductName">Silver-Blue Dial 26mm</p>
               <p class="modal__product-price" id="modalProductPrice">₦ 980,000.00</p>
             </div>
-            <div class="modal__actions">
-              <button type="button" class="btn btn--buy modal__buy-btn">Buy Now</button>
-              <button type="button" class="btn btn--cart modal__cart-btn">
+
+            <p class="modal__desc" id="modalDesc">Experience refined elegance with the BAY ICE SKYLIGHT. Crafted with premium materials and timeless design, it is more than a watch — it is a statement of confidence and style.</p>
+
+            <div class="modal__specs" id="modalSpecs">
+              <h3 class="modal__specs-title">Specifications</h3>
+              <ul class="modal__specs-list" id="modalSpecsList"></ul>
+            </div>
+
+            <div class="modal__qty-row">
+              <div class="qty" aria-label="Quantity">
+                <button type="button" class="qty__btn" id="modalQtyDown">−</button>
+                <span class="qty__num" id="modalQtyNum">1</span>
+                <button type="button" class="qty__btn" id="modalQtyUp">+</button>
+              </div>
+              <button type="button" class="btn btn--cart modal__cart-btn" id="modalCartBtn">
                 <svg class="btn--cart__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                   <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
                 </svg>
                 Add to cart
               </button>
             </div>
+
+            <div class="modal__action-btns">
+              <button type="button" class="btn btn--buy modal__buy-btn" id="modalBuyBtn">Buy Now</button>
+              <button type="button" class="btn btn--shopify modal__shopify-btn" id="modalShopifyBtn">Buy with SHOP</button>
+            </div>
+
+            <div class="modal__trust">
+              <p>Secure and trusted checkout with</p>
+              <div class="pay-badges">
+                <span class="pay-badge pay-badge--visa">VISA</span>
+                <span class="pay-badge pay-badge--mc" aria-label="Mastercard"></span>
+                <span class="pay-badge pay-badge--amex">AMEX</span>
+                <span class="pay-badge pay-badge--disc">DISCOVER</span>
+              </div>
+              <a href="#" class="checkout__more-pay">More payment options</a>
+            </div>
           </div>
         </div>
+
+        <!-- Collection selector -->
         <div class="modal__watch-selector">
-          <h3>Collection</h3>
+          <h3 class="modal__selector-title">Collection</h3>
           <div class="modal__watch-grid" id="modalWatchGrid"></div>
         </div>
       </div>
@@ -276,7 +255,6 @@
 
 <script src="js/hero.js"></script>
 <script src="js/carousel.js"></script>
-<script src="js/slider.js"></script>
 <script src="js/scroll.js"></script>
 <script src="js/modal.js"></script>
 </body>

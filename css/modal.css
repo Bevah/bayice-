@@ -1,11 +1,9 @@
-/* —— Modal Redesign: Full-Page Feel —— */
+/* —— Unified Product Modal —— */
 .modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2000; /* Above nav */
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 2000;
   display: flex;
   align-items: stretch;
   justify-content: stretch;
@@ -23,10 +21,8 @@
 
 .modal__overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: var(--black);
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -38,8 +34,7 @@
 
 .modal__content {
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   background: var(--modal-bg, var(--black));
   overflow-y: auto;
   transform: translateY(100%);
@@ -59,10 +54,9 @@
   position: fixed;
   top: clamp(16px, 4vw, 32px);
   right: clamp(16px, 4vw, 32px);
-  width: 48px;
-  height: 48px;
+  width: 48px; height: 48px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255,255,255,0.08);
   color: var(--text);
   font-size: 28px;
   font-weight: 200;
@@ -73,10 +67,11 @@
   align-items: center;
   justify-content: center;
   transition: background 0.25s ease, transform 0.25s ease;
+  backdrop-filter: blur(8px);
 }
 
 .modal__close:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255,255,255,0.15);
   transform: rotate(90deg);
 }
 
@@ -97,31 +92,32 @@
   flex: 1;
 }
 
-/* Upper section with watch and details */
+/* —— Top section: watch + details grid —— */
 .modal__top {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
   gap: clamp(40px, 6vw, 100px);
-  align-items: center;
+  align-items: start;
 }
 
+/* Watch stage (left column) */
 .modal__watch-stage {
-  position: relative;
+  position: sticky;
+  top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background: transparent;
   border-radius: 40px;
-  padding: clamp(30px, 5vw, 60px);
-  transition: background 0.8s ease;
-  min-height: 500px;
+  padding: clamp(20px, 4vw, 50px);
+  min-height: 460px;
 }
 
 .modal__available {
   position: absolute;
-  top: 32px;
-  right: 40px;
+  top: 28px;
+  right: 36px;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.25em;
@@ -131,7 +127,7 @@
 
 .modal__watch {
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
   cursor: pointer;
   perspective: 1200px;
 }
@@ -140,24 +136,24 @@
   display: block;
   width: 100%;
   height: auto;
-  max-height: 550px;
+  max-height: 520px;
   object-fit: contain;
-  filter: drop-shadow(0 32px 64px rgba(52, 152, 219, 0.25));
+  filter: drop-shadow(0 32px 64px rgba(52,152,219,0.25));
   transition: transform 0.4s var(--ease), filter 0.4s ease;
   transform-style: preserve-3d;
 }
 
 .modal__dial-label {
-  margin-top: 24px;
-  font-size: 12px;
+  margin-top: 20px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--accent);
 }
 
-.modal__bars--numbered {
-  margin-top: 32px;
+.modal__bars {
+  margin-top: 28px;
   display: flex;
   gap: 12px;
   align-items: flex-end;
@@ -168,7 +164,7 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255,255,255,0.3);
   transition: color 0.3s ease;
 }
 
@@ -201,66 +197,163 @@
   display: none;
 }
 
-/* Sidebar Details */
+.modal__bar:not(.modal__bar--active):hover {
+  color: #fff;
+}
+
+.modal__bar:not(.modal__bar--active):hover::before {
+  height: 22px;
+}
+
+/* Auto-rotation indicator */
+.modal__auto-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+}
+
+.modal__auto-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: modalPulse 2s ease-in-out infinite;
+}
+
+@keyframes modalPulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* —— Details panel (right column) —— */
 .modal__details {
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  max-width: 480px;
+  gap: 28px;
+  max-width: 500px;
+  padding-top: 12px;
 }
 
 .modal__product-info {
   border-bottom: 1px solid var(--border);
-  padding-bottom: 32px;
+  padding-bottom: 28px;
 }
 
 .modal__product-line {
   font-family: var(--font-sans);
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--text);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .modal__product-name {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--text-muted);
   font-weight: 500;
   letter-spacing: 0.05em;
 }
 
 .modal__product-price {
-  margin-top: 24px;
+  margin-top: 20px;
   font-family: var(--font-serif);
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
   font-weight: 700;
   color: #fff;
 }
 
-.modal__actions {
-  display: flex;
-  gap: 16px;
+/* Description */
+.modal__desc {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-muted);
+  letter-spacing: 0.01em;
 }
 
-.modal__buy-btn {
-  flex: 1.2;
-  background: var(--accent);
-  color: #fff;
-  padding: 18px 32px;
-  border-radius: var(--radius-pill);
+/* Specs */
+.modal__specs-title {
   font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.modal__specs-list {
+  list-style: none;
+  border-top: 1px solid var(--border);
+}
+
+.modal__specs-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.modal__specs-list li span:first-child {
+  color: var(--text-muted);
+}
+
+.modal__specs-list li span:last-child {
+  font-weight: 500;
+  text-align: right;
+  color: var(--text);
+}
+
+/* Quantity + Add to Cart row */
+.modal__qty-row {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.modal__qty-row .qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  padding: 8px 18px;
+  background: transparent;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-strong);
+}
+
+.modal__qty-row .qty__btn {
+  font-size: 18px;
+  color: var(--text);
+  line-height: 1;
+  padding: 4px;
+  transition: color 0.2s;
+}
+
+.modal__qty-row .qty__btn:hover {
+  color: var(--accent);
+}
+
+.modal__qty-row .qty__num {
+  font-size: 14px;
+  font-weight: 600;
+  min-width: 1.25rem;
+  text-align: center;
+  color: var(--text);
 }
 
 .modal__cart-btn {
   flex: 1;
-  background: transparent;
-  color: #fff;
-  border: 1px solid var(--border-strong);
+  min-height: 44px;
+  background: #fff;
+  color: var(--checkout-text);
+  border: 1px solid var(--checkout-text);
   border-radius: var(--radius-pill);
   display: flex;
   align-items: center;
@@ -271,78 +364,158 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   transition: all 0.3s ease;
+  padding: 0 24px;
 }
 
 .modal__cart-btn:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: #fff;
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
-/* Custom scrollbar for the full-page modal */
-.modal__content::-webkit-scrollbar {
-  width: 6px;
+.modal__cart-btn--added {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
 }
 
-.modal__content::-webkit-scrollbar-track {
-  background: transparent;
+/* Action buttons row */
+.modal__action-btns {
+  display: flex;
+  gap: 12px;
 }
 
-.modal__content::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
+.modal__buy-btn {
+  flex: 1;
+  background: var(--accent);
+  color: #fff;
+  padding: 16px 28px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: background 0.3s, box-shadow 0.3s;
 }
 
-.modal__content::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+.modal__buy-btn:hover {
+  background: var(--accent-hover);
+  box-shadow: 0 8px 24px rgba(52,152,219,0.35);
 }
 
-.modal__content {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
-  scroll-behavior: smooth;
+.modal__shopify-btn {
+  flex: 1;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 12px;
+  padding: 14px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  transition: background 0.3s, box-shadow 0.3s;
 }
 
-/* Enhanced Collection Boxes for PC */
+.modal__shopify-btn:hover {
+  background: var(--accent-hover);
+  box-shadow: 0 10px 28px rgba(52,152,219,0.35);
+}
+
+/* Trust section */
+.modal__trust {
+  padding-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal__trust > p {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.04em;
+}
+
+.modal__trust .pay-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.modal__trust .pay-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 5px 10px;
+  border-radius: 4px;
+  opacity: 0.8;
+}
+
+.modal__trust .pay-badge--visa { background: #1a1f71; color: #fff; }
+.modal__trust .pay-badge--mc {
+  width: 34px; height: 22px;
+  padding: 0;
+  background: linear-gradient(90deg, #eb001b 50%, #f79e1b 50%);
+  position: relative;
+}
+.modal__trust .pay-badge--mc::after {
+  content: "";
+  position: absolute;
+  width: 10px; height: 10px;
+  background: #ff5f00;
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.modal__trust .pay-badge--amex { background: #016fd0; color: #fff; }
+.modal__trust .pay-badge--disc { background: #f76f20; color: #fff; }
+
+.modal__trust .checkout__more-pay {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent);
+  width: fit-content;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.modal__trust .checkout__more-pay:hover {
+  opacity: 1;
+}
+
+/* —— Collection Selector —— */
+.modal__watch-selector {
+  border-top: 1px solid var(--border);
+  padding-top: clamp(28px, 4vw, 40px);
+}
+
+.modal__selector-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
 .modal__watch-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 24px;
-  overflow-x: visible; /* Use grid layout for PC */
-  padding-bottom: 0;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
 }
 
 .modal__watch-thumb {
-  flex: none; /* Reset flex for grid */
-  width: 100%;
-  aspect-ratio: 1 / 1.1;
-  justify-content: center;
-}
-
-/* Hover effects for PC view buttons */
-.modal__bar:not(.modal__bar--active):hover {
-  color: #fff;
-}
-
-.modal__bar:not(.modal__bar--active):hover::before {
-  height: 22px;
-}
-
-/* Responsive Reset for Mobile Grid */
-@media (max-width: 768px) {
-  .modal__watch-grid {
-    display: flex; /* Back to scroll for mobile */
-    grid-template-columns: none;
-    overflow-x: auto;
-  }
-  
-  .modal__watch-thumb {
-    flex: 0 0 140px;
-    aspect-ratio: auto;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 14px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.35s var(--ease);
 }
 
 .modal__watch-thumb:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   background: var(--gray-800);
   border-color: var(--border-strong);
 }
@@ -350,19 +523,19 @@
 .modal__watch-thumb--active {
   background: #151515;
   border-color: var(--accent);
-  box-shadow: 0 0 24px rgba(52, 152, 219, 0.15);
+  box-shadow: 0 0 24px rgba(52,152,219,0.15);
 }
 
 .modal__watch-thumb img {
   width: 100%;
   height: auto;
-  max-height: 120px;
+  max-height: 110px;
   object-fit: contain;
   transition: transform 0.4s var(--ease);
 }
 
 .modal__watch-thumb:hover img {
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
 .modal__watch-thumb-name {
@@ -378,34 +551,48 @@
   color: #fff;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .modal__body {
-    padding: 80px 20px 40px;
-  }
+/* —— Scrollbar —— */
+.modal__content::-webkit-scrollbar { width: 6px; }
+.modal__content::-webkit-scrollbar-track { background: transparent; }
+.modal__content::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+}
+.modal__content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.2);
+}
 
+.modal__content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+  scroll-behavior: smooth;
+}
+
+/* —— Responsive —— */
+@media (max-width: 900px) {
   .modal__top {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 24px;
   }
 
   .modal__watch-stage {
+    position: relative;
     min-height: auto;
     padding: 20px 0;
   }
 
   .modal__watch {
-    max-width: 300px;
+    max-width: 280px;
   }
 
   .modal__watch img {
-    max-height: 400px;
+    max-height: 360px;
   }
 
   .modal__details {
     max-width: none;
-    text-align: center;
     gap: 24px;
+    padding-top: 0;
   }
 
   .modal__product-info {
@@ -413,63 +600,172 @@
   }
 
   .modal__product-line {
-    font-size: 32px;
-  }
-
-  .modal__product-price {
-    font-size: 24px;
-    margin-top: 12px;
-  }
-
-  .modal__actions {
-    width: 100%;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .modal__buy-btn, .modal__cart-btn {
-    width: 100%;
-    padding: 16px;
-  }
-
-  .modal__watch-selector {
-    margin-top: 40px;
-    padding-top: 30px;
-  }
-
-  .modal__watch-grid {
-    gap: 12px;
-    padding-bottom: 10px;
-    margin: 0 -20px;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  .modal__watch-thumb {
-    flex: 0 0 140px;
-    padding: 15px 10px;
-    border-radius: 16px;
-  }
-
-  .modal__watch-thumb img {
-    max-height: 90px;
-  }
-}
-
-@media (max-width: 480px) {
-  .modal__close {
-    top: 16px;
-    right: 16px;
-    width: 40px;
-    height: 40px;
-    font-size: 24px;
-  }
-
-  .modal__product-line {
     font-size: 28px;
   }
 
+  .modal__product-price {
+    font-size: 22px;
+    margin-top: 14px;
+  }
+
+  .modal__qty-row {
+    flex-direction: column;
+  }
+
+  .modal__qty-row .qty {
+    width: fit-content;
+    align-self: center;
+  }
+
+  .modal__action-btns {
+    flex-direction: column;
+  }
+
+  .modal__buy-btn, .modal__shopify-btn {
+    width: 100%;
+  }
+
+  .modal__watch-selector {
+    margin-top: 20px;
+    padding-top: 24px;
+  }
+
+  .modal__watch-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .modal__body {
+    padding: 70px 16px 32px;
+  }
+
+  .modal__close {
+    top: 14px;
+    right: 14px;
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+  }
+
+  .modal__top {
+    gap: 16px;
+  }
+
+  .modal__watch-stage {
+    padding: 10px 0;
+  }
+
+  .modal__watch {
+    max-width: 220px;
+  }
+
+  .modal__watch img {
+    max-height: 300px;
+  }
+
+  .modal__available {
+    top: 10px;
+    right: 16px;
+    font-size: 9px;
+  }
+
+  .modal__bars {
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .modal__details {
+    gap: 20px;
+  }
+
+  .modal__product-line {
+    font-size: 24px;
+  }
+
+  .modal__product-price {
+    font-size: 20px;
+  }
+
+  .modal__desc {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .modal__specs-list li {
+    font-size: 12px;
+    padding: 8px 0;
+  }
+
+  .modal__qty-row .qty {
+    padding: 6px 14px;
+    gap: 14px;
+    align-self: stretch;
+    justify-content: center;
+  }
+
+  .modal__cart-btn {
+    min-height: 42px;
+    font-size: 11px;
+  }
+
+  .modal__buy-btn, .modal__shopify-btn {
+    padding: 14px 20px;
+    font-size: 12px;
+  }
+
+  .modal__watch-grid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+  }
+
   .modal__watch-thumb {
-    flex: 0 0 120px;
+    padding: 12px 8px;
+    border-radius: 14px;
+  }
+
+  .modal__watch-thumb img {
+    max-height: 80px;
+  }
+
+  .modal__watch-thumb-name {
+    font-size: 9px;
+  }
+
+  .modal__trust {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 400px) {
+  .modal__body {
+    padding: 64px 12px 24px;
+  }
+
+  .modal__watch {
+    max-width: 180px;
+  }
+
+  .modal__watch img {
+    max-height: 240px;
+  }
+
+  .modal__watch-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .modal__watch-thumb {
+    padding: 10px 6px;
+    border-radius: 12px;
+  }
+
+  .modal__watch-thumb img {
+    max-height: 65px;
+  }
+
+  .modal__action-btns {
+    gap: 8px;
   }
 }
