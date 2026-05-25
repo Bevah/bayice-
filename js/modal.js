@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const AUTO_SWITCH_MS = 15000;
+  const AUTO_SWITCH_MS = 3000;
 
   const watchCatalog = {
     'halo-green': {
@@ -177,10 +177,13 @@
   function startAutoSwitch() {
     stopAutoSwitch();
     autoTimer = setInterval(() => {
-      const keys = Object.keys(watchCatalog);
-      const curIdx = keys.indexOf(currentWatch);
-      const nextIdx = (curIdx + 1) % keys.length;
-      updateModalWatch(keys[nextIdx]);
+      const watch = watchCatalog[currentWatch];
+      const viewKeys = Object.keys(watch.views);
+      if (viewKeys.length > 1) {
+        const curIdx = viewKeys.indexOf(currentView);
+        const nextIdx = (curIdx + 1) % viewKeys.length;
+        setModalView(viewKeys[nextIdx]);
+      }
     }, AUTO_SWITCH_MS);
   }
 
@@ -287,8 +290,25 @@
       bar.setAttribute('aria-selected', on ? 'true' : 'false');
     });
 
-    modalWatchImg.src = watch.views[view];
-    modalWatchImg.alt = `${watch.line} ${watch.name} ${view} view`;
+    if (typeof gsap !== 'undefined') {
+      gsap.to(modalWatchImg, {
+        opacity: 0,
+        duration: 0.15,
+        ease: 'power2.in',
+        onComplete() {
+          modalWatchImg.src = watch.views[view];
+          modalWatchImg.alt = `${watch.line} ${watch.name} ${view} view`;
+          gsap.to(modalWatchImg, {
+            opacity: 1,
+            duration: 0.25,
+            ease: 'power2.out'
+          });
+        }
+      });
+    } else {
+      modalWatchImg.src = watch.views[view];
+      modalWatchImg.alt = `${watch.line} ${watch.name} ${view} view`;
+    }
 
     resetAutoSwitch();
   }
